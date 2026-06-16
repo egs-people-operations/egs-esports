@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="ds/colors_and_type.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    @keyframes egsPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+    @keyframes egsBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes egsDrift { 0% { background-position: 0 0, 0 0; } 100% { background-position: 84px 0, 0 84px; } }
+    @keyframes egsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes egsRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; background:#06090F; padding:48px; display:flex; align-items:center; justify-content:center; font-family:var(--font-sans);">
+  <div style="container-type:size; width:100%; max-width:1920px; aspect-ratio:1920 / 1080; position:relative;">
+    <div data-screen-label="Championship" style="position:absolute; top:0; left:0; width:1920px; height:1080px; transform-origin:top left; transform:scale({{ fitScale }}); border-radius:18px; overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,0.6); background:#080C14; color:#fff;">
+
+      <!-- ===== DECOR LAYERS ===== -->
+      <div style="position:absolute; inset:0; background:radial-gradient(135% 85% at 50% -18%, rgba(93,60,176,0.52), transparent 58%), radial-gradient(70% 60% at 100% 118%, rgba(73,112,174,0.32), transparent 60%), radial-gradient(70% 60% at 0% 118%, rgba(93,60,176,0.24), transparent 60%); pointer-events:none; animation:egsPulse 6.5s ease-in-out infinite;"></div>
+      <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 84px), repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 84px); pointer-events:none; -webkit-mask-image:radial-gradient(120% 120% at 50% 40%, #000 35%, transparent 85%); mask-image:radial-gradient(120% 120% at 50% 40%, #000 35%, transparent 85%);"></div>
+      <div style="position:absolute; top:-80px; right:-80px; width:580px; height:580px; background:repeating-linear-gradient(135deg, rgba(125,150,200,0.12) 0 2px, transparent 2px 24px); pointer-events:none; -webkit-mask-image:radial-gradient(circle at top right, #000, transparent 70%); mask-image:radial-gradient(circle at top right, #000, transparent 70%);"></div>
+      <div style="position:absolute; bottom:-80px; left:-80px; width:540px; height:540px; background:repeating-linear-gradient(135deg, rgba(138,114,199,0.12) 0 2px, transparent 2px 24px); pointer-events:none; -webkit-mask-image:radial-gradient(circle at bottom left, #000, transparent 70%); mask-image:radial-gradient(circle at bottom left, #000, transparent 70%);"></div>
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, transparent, #4970AE 22%, #5D3CB0 78%, transparent); pointer-events:none;"></div>
+
+      <!-- HUD corner brackets -->
+      <div style="position:absolute; top:30px; left:30px; width:48px; height:48px; border-left:2px solid rgba(138,114,199,0.65); border-top:2px solid rgba(138,114,199,0.65); pointer-events:none;"></div>
+      <div style="position:absolute; top:30px; right:30px; width:48px; height:48px; border-right:2px solid rgba(118,148,194,0.65); border-top:2px solid rgba(118,148,194,0.65); pointer-events:none;"></div>
+      <div style="position:absolute; bottom:30px; left:30px; width:48px; height:48px; border-left:2px solid rgba(118,148,194,0.65); border-bottom:2px solid rgba(118,148,194,0.65); pointer-events:none;"></div>
+      <div style="position:absolute; bottom:30px; right:30px; width:48px; height:48px; border-right:2px solid rgba(138,114,199,0.65); border-bottom:2px solid rgba(138,114,199,0.65); pointer-events:none;"></div>
+
+      <!-- HUD top labels -->
+      <div style="position:absolute; top:42px; left:98px; font-family:var(--font-mono); font-size:13px; letter-spacing:0.22em; color:rgba(255,255,255,0.5);">EGS // SEASON 2026</div>
+      <div style="position:absolute; top:42px; right:98px; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:13px; letter-spacing:0.22em; color:rgba(255,255,255,0.62);"><span style="width:8px; height:8px; border-radius:999px; background:#27D07A; box-shadow:0 0 10px #27D07A; animation:egsBlink 1.6s ease infinite;"></span>VOTING OPEN</div>
+
+      <svg width="0" height="0" style="position:absolute;"><defs><linearGradient id="egs-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#4970AE"></stop><stop offset="100%" stopColor="#5D3CB0"></stop></linearGradient></defs></svg>
+
+      <!-- ===== CONTENT ===== -->
+      <div style="position:relative; z-index:1; height:100%; padding:62px 96px 54px; display:flex; flex-direction:column;">
+
+        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:13px; margin-top:6px;">
+          <img src="ds/egs-logo-white.svg" alt="Eastgate Software" style="height:30px;">
+          <h1 style="font-size:96px; font-weight:900; letter-spacing:-0.03em; line-height:0.95; color:#fff; margin:10px 0 0; text-shadow:0 0 55px rgba(93,60,176,0.6), 0 0 16px rgba(73,112,174,0.4);">ESPORTS CHAMPIONSHIP 2026</h1>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:2px;">
+            <div style="width:50px; height:3px; border-radius:999px; background:linear-gradient(90deg, transparent, #4970AE);"></div>
+            <div style="width:140px; height:4px; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0);"></div>
+            <div style="width:50px; height:3px; border-radius:999px; background:linear-gradient(90deg, #5D3CB0, transparent);"></div>
+          </div>
+          <div style="font-size:22px; color:rgba(255,255,255,0.8); font-weight:500; margin-top:4px;">{{ subhead }} — pick up to 2</div>
+          <div style="display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:13px; color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.15); padding:9px 18px; border-radius:999px; margin-top:2px;"><span style="color:#fff; font-weight:700;">{{ totalLabel }}</span> votes cast<span style="color:rgba(255,255,255,0.3);">·</span>{{ closeDate }}</div>
+
+          <div style="display:flex; align-items:center; gap:12px; margin-top:6px; width:100%; max-width:600px;">
+            <input value="{{ voterName }}" onChange="{{ onName }}" placeholder="Type your name to vote" style="flex:1; min-width:0; height:48px; padding:0 18px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-family:var(--font-sans); font-size:15px; outline:none;">
+            <div style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.55); white-space:nowrap;">{{ selectedLabel }}</div>
+            <sc-if value="{{ canSubmit }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ submit }}" role="button" style="height:48px; padding:0 26px; display:flex; align-items:center; border-radius:8px; background:linear-gradient(90deg,#4970AE,#5D3CB0); color:#fff; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 22px rgba(93,60,176,0.45);">Submit</div>
+            </sc-if>
+            <sc-if value="{{ cannotSubmit }}" hint-placeholder-val="{{ true }}">
+              <div style="height:48px; padding:0 26px; display:flex; align-items:center; border-radius:8px; background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.4); font-size:14px; font-weight:700; border:1px solid rgba(255,255,255,0.1); white-space:nowrap;">Submit</div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:24px;">
+          <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:22px; width:100%;">
+
+            <!-- LoL -->
+            <div onClick="{{ g_lol.vote }}" role="button" style="position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:28px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:15px; cursor:pointer; transition:border-color 150ms ease, transform 150ms ease;" style-hover="border-color:rgba(255,255,255,0.26); transform:translateY(-3px);">
+              <div style="position:relative; width:128px; height:128px;">
+                <svg width="128" height="128" viewBox="0 0 120 120" style="display:block;"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="8"></circle><circle cx="60" cy="60" r="54" fill="none" stroke="url(#egs-grad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="339.292" strokeDashoffset="{{ g_lol.ringOffset }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 650ms cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(120,90,190,0.55));"></circle></svg>
+                <div style="position:absolute; inset:0; display:grid; place-items:center; color:#fff;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline><line x1="13" y1="19" x2="19" y2="13"></line><line x1="16" y1="16" x2="20" y2="20"></line><line x1="19" y1="21" x2="21" y2="19"></line><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"></polyline><line x1="5" y1="14" x2="9" y2="18"></line><line x1="7" y1="17" x2="4" y2="20"></line><line x1="3" y1="19" x2="5" y2="21"></line></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="font-size:18px; font-weight:700; text-align:center; line-height:1.15;">{{ g_lol.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.45); text-align:center;">{{ g_lol.tag }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-size:30px; font-weight:800;">{{ g_lol.pctLabel }}</span><span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.5);">{{ g_lol.countLabel }}</span></div>
+              <sc-if value="{{ g_lol.inactive }}" hint-placeholder-val="{{ true }}"><div style="width:100%; padding:11px 0; border-radius:999px; border:1px solid rgba(255,255,255,0.2); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff;">Select</div></sc-if>
+              <sc-if value="{{ g_lol.active }}" hint-placeholder-val="{{ false }}"><div style="width:100%; padding:11px 0; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(93,60,176,0.5);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Selected</div><div style="position:absolute; inset:0; border:1.5px solid #8A72C7; border-radius:8px; pointer-events:none; box-shadow:0 0 0 4px rgba(141,114,199,0.14), 0 0 28px rgba(93,60,176,0.4);"></div></sc-if>
+            </div>
+
+            <!-- Valorant -->
+            <div onClick="{{ g_val.vote }}" role="button" style="position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:28px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:15px; cursor:pointer; transition:border-color 150ms ease, transform 150ms ease;" style-hover="border-color:rgba(255,255,255,0.26); transform:translateY(-3px);">
+              <div style="position:relative; width:128px; height:128px;">
+                <svg width="128" height="128" viewBox="0 0 120 120" style="display:block;"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="8"></circle><circle cx="60" cy="60" r="54" fill="none" stroke="url(#egs-grad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="339.292" strokeDashoffset="{{ g_val.ringOffset }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 650ms cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(120,90,190,0.55));"></circle></svg>
+                <div style="position:absolute; inset:0; display:grid; place-items:center; color:#fff;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="font-size:18px; font-weight:700; text-align:center; line-height:1.15;">{{ g_val.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.45); text-align:center;">{{ g_val.tag }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-size:30px; font-weight:800;">{{ g_val.pctLabel }}</span><span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.5);">{{ g_val.countLabel }}</span></div>
+              <sc-if value="{{ g_val.inactive }}" hint-placeholder-val="{{ true }}"><div style="width:100%; padding:11px 0; border-radius:999px; border:1px solid rgba(255,255,255,0.2); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff;">Select</div></sc-if>
+              <sc-if value="{{ g_val.active }}" hint-placeholder-val="{{ false }}"><div style="width:100%; padding:11px 0; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(93,60,176,0.5);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Selected</div><div style="position:absolute; inset:0; border:1.5px solid #8A72C7; border-radius:8px; pointer-events:none; box-shadow:0 0 0 4px rgba(141,114,199,0.14), 0 0 28px rgba(93,60,176,0.4);"></div></sc-if>
+            </div>
+
+            <!-- CS2 -->
+            <div onClick="{{ g_cs2.vote }}" role="button" style="position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:28px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:15px; cursor:pointer; transition:border-color 150ms ease, transform 150ms ease;" style-hover="border-color:rgba(255,255,255,0.26); transform:translateY(-3px);">
+              <div style="position:relative; width:128px; height:128px;">
+                <svg width="128" height="128" viewBox="0 0 120 120" style="display:block;"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="8"></circle><circle cx="60" cy="60" r="54" fill="none" stroke="url(#egs-grad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="339.292" strokeDashoffset="{{ g_cs2.ringOffset }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 650ms cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(120,90,190,0.55));"></circle></svg>
+                <div style="position:absolute; inset:0; display:grid; place-items:center; color:#fff;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="13" r="9"></circle><path d="M14.35 4.65 16.3 2.7a2.41 2.41 0 0 1 3.4 0l1.6 1.6a2.4 2.4 0 0 1 0 3.4l-1.95 1.95"></path><path d="m22 2-1.5 1.5"></path></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="font-size:18px; font-weight:700; text-align:center; line-height:1.15;">{{ g_cs2.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.45); text-align:center;">{{ g_cs2.tag }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-size:30px; font-weight:800;">{{ g_cs2.pctLabel }}</span><span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.5);">{{ g_cs2.countLabel }}</span></div>
+              <sc-if value="{{ g_cs2.inactive }}" hint-placeholder-val="{{ true }}"><div style="width:100%; padding:11px 0; border-radius:999px; border:1px solid rgba(255,255,255,0.2); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff;">Select</div></sc-if>
+              <sc-if value="{{ g_cs2.active }}" hint-placeholder-val="{{ false }}"><div style="width:100%; padding:11px 0; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(93,60,176,0.5);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Selected</div><div style="position:absolute; inset:0; border:1.5px solid #8A72C7; border-radius:8px; pointer-events:none; box-shadow:0 0 0 4px rgba(141,114,199,0.14), 0 0 28px rgba(93,60,176,0.4);"></div></sc-if>
+            </div>
+
+            <!-- FIFA -->
+            <div onClick="{{ g_fifa.vote }}" role="button" style="position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:28px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:15px; cursor:pointer; transition:border-color 150ms ease, transform 150ms ease;" style-hover="border-color:rgba(255,255,255,0.26); transform:translateY(-3px);">
+              <div style="position:relative; width:128px; height:128px;">
+                <svg width="128" height="128" viewBox="0 0 120 120" style="display:block;"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="8"></circle><circle cx="60" cy="60" r="54" fill="none" stroke="url(#egs-grad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="339.292" strokeDashoffset="{{ g_fifa.ringOffset }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 650ms cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(120,90,190,0.55));"></circle></svg>
+                <div style="position:absolute; inset:0; display:grid; place-items:center; color:#fff;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8.8L15 11L13.9 14.6L10.1 14.6L9 11Z"></path><line x1="12" y1="8.8" x2="12" y2="3.4"></line><line x1="15" y1="11" x2="19.6" y2="9.2"></line><line x1="13.9" y1="14.6" x2="16.6" y2="18.8"></line><line x1="10.1" y1="14.6" x2="7.4" y2="18.8"></line><line x1="9" y1="11" x2="4.4" y2="9.2"></line></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="font-size:18px; font-weight:700; text-align:center; line-height:1.15;">{{ g_fifa.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.45); text-align:center;">{{ g_fifa.tag }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-size:30px; font-weight:800;">{{ g_fifa.pctLabel }}</span><span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.5);">{{ g_fifa.countLabel }}</span></div>
+              <sc-if value="{{ g_fifa.inactive }}" hint-placeholder-val="{{ true }}"><div style="width:100%; padding:11px 0; border-radius:999px; border:1px solid rgba(255,255,255,0.2); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff;">Select</div></sc-if>
+              <sc-if value="{{ g_fifa.active }}" hint-placeholder-val="{{ false }}"><div style="width:100%; padding:11px 0; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(93,60,176,0.5);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Selected</div><div style="position:absolute; inset:0; border:1.5px solid #8A72C7; border-radius:8px; pointer-events:none; box-shadow:0 0 0 4px rgba(141,114,199,0.14), 0 0 28px rgba(93,60,176,0.4);"></div></sc-if>
+            </div>
+
+            <!-- Dota 2 -->
+            <div onClick="{{ g_dota.vote }}" role="button" style="position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:28px 20px 22px; display:flex; flex-direction:column; align-items:center; gap:15px; cursor:pointer; transition:border-color 150ms ease, transform 150ms ease;" style-hover="border-color:rgba(255,255,255,0.26); transform:translateY(-3px);">
+              <div style="position:relative; width:128px; height:128px;">
+                <svg width="128" height="128" viewBox="0 0 120 120" style="display:block;"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="8"></circle><circle cx="60" cy="60" r="54" fill="none" stroke="url(#egs-grad)" strokeWidth="8" strokeLinecap="round" strokeDasharray="339.292" strokeDashoffset="{{ g_dota.ringOffset }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 650ms cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(120,90,190,0.55));"></circle></svg>
+                <div style="position:absolute; inset:0; display:grid; place-items:center; color:#fff;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"></path><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"></path></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                <div style="font-size:18px; font-weight:700; text-align:center; line-height:1.15;">{{ g_dota.name }}</div>
+                <div style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.45); text-align:center;">{{ g_dota.tag }}</div>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-size:30px; font-weight:800;">{{ g_dota.pctLabel }}</span><span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.5);">{{ g_dota.countLabel }}</span></div>
+              <sc-if value="{{ g_dota.inactive }}" hint-placeholder-val="{{ true }}"><div style="width:100%; padding:11px 0; border-radius:999px; border:1px solid rgba(255,255,255,0.2); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff;">Select</div></sc-if>
+              <sc-if value="{{ g_dota.active }}" hint-placeholder-val="{{ false }}"><div style="width:100%; padding:11px 0; border-radius:999px; background:linear-gradient(90deg,#4970AE,#5D3CB0); text-align:center; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 20px rgba(93,60,176,0.5);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Selected</div><div style="position:absolute; inset:0; border:1.5px solid #8A72C7; border-radius:8px; pointer-events:none; box-shadow:0 0 0 4px rgba(141,114,199,0.14), 0 0 28px rgba(93,60,176,0.4);"></div></sc-if>
+            </div>
+
+          </div>
+
+          <!-- ===== LIVE FEED ===== -->
+          <div style="position:relative; border:1px solid rgba(255,255,255,0.10); border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)); padding:14px 18px; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="width:8px; height:8px; border-radius:999px; background:#E24B4B; box-shadow:0 0 10px #E24B4B; animation:egsBlink 1.4s ease infinite;"></span>
+                <span style="font-family:var(--font-mono); font-size:13px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.72);">Live feed</span>
+                <span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.42);">· {{ voterCountLabel }} submissions</span>
+              </div>
+              <div onClick="{{ exportCsv }}" role="button" style="display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.62); border:1px solid rgba(255,255,255,0.16); padding:7px 13px; border-radius:8px; cursor:pointer; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#fff; border-color:rgba(255,255,255,0.42);">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export results
+              </div>
+            </div>
+
+            <div style="position:relative; height:46px; overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image:linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);">
+              <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ true }}">
+                <div style="height:46px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:13px; color:rgba(255,255,255,0.4);">Submissions appear here live as people vote.</div>
+              </sc-if>
+              <sc-if value="{{ showStatic }}" hint-placeholder-val="{{ false }}">
+                <div style="height:46px; display:flex; align-items:center; gap:12px;">
+                  <sc-for list="{{ feedChips }}" as="c" hint-placeholder-count="3">
+                    <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:999px; padding:5px 14px 5px 5px; animation:egsRise 350ms ease both;">
+                      <div style="width:30px; height:30px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff;">{{ c.initials }}</div>
+                      <div style="display:flex; flex-direction:column; line-height:1.18;">
+                        <span style="font-size:13px; font-weight:700; color:#fff; white-space:nowrap;">{{ c.name }}</span>
+                        <span style="font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.5); white-space:nowrap;">{{ c.picksLabel }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:12px; width:max-content; animation:egsMarquee {{ marqueeDur }} linear infinite;" style-hover="animation-play-state:paused;">
+                  <sc-for list="{{ feedChips }}" as="c" hint-placeholder-count="6">
+                    <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:999px; padding:5px 14px 5px 5px;">
+                      <div style="width:30px; height:30px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff;">{{ c.initials }}</div>
+                      <div style="display:flex; flex-direction:column; line-height:1.18;">
+                        <span style="font-size:13px; font-weight:700; color:#fff; white-space:nowrap;">{{ c.name }}</span>
+                        <span style="font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.5); white-space:nowrap;">{{ c.picksLabel }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <sc-for list="{{ feedChips }}" as="c" hint-placeholder-count="6">
+                    <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:999px; padding:5px 14px 5px 5px;">
+                      <div style="width:30px; height:30px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:13px; font-weight:800; color:#fff;">{{ c.initials }}</div>
+                      <div style="display:flex; flex-direction:column; line-height:1.18;">
+                        <span style="font-size:13px; font-weight:700; color:#fff; white-space:nowrap;">{{ c.name }}</span>
+                        <span style="font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.5); white-space:nowrap;">{{ c.picksLabel }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center; font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.42);">2 votes per person · <span style="color:rgba(255,255,255,0.7);">{{ voterCountLabel }}</span> people voted · Eastgate Software</div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;eyebrow&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Eastgate Software · Internal 2026&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;subhead&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Vote for your game&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;closeDate&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Voting closes Fri, Jun 26 · 18:00&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    votes: { lol: 0, val: 0, cs2: 0, fifa: 0, dota: 0 },
+    selected: [],
+    voterName: '',
+    voters: [],
+    justSubmitted: false,
+    fitScale: 1,
+  };
+
+  // ============================================================
+  //  ONLINE / REALTIME BACKEND  (Firebase Realtime Database)
+  //  Leave blank  -> runs locally (votes stored per-browser).
+  //  Paste your Firebase web config below -> shared, cross-device,
+  //  real-time voting + live feed. (apiKey + databaseURL required.)
+  // ============================================================
+  firebaseConfig = {
+    apiKey: "",
+    authDomain: "egs-esports.firebaseapp.com",
+    databaseURL: "https://egs-esports-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "egs-esports",
+    appId: ""
+  };
+  roomId = "esports-championship-2026";
+  useFb = false;
+
+  isOnline() {
+    const c = this.firebaseConfig;
+    return !!(c && c.databaseURL);
+  }
+
+  componentDidMount() {
+    if (!this.isOnline()) {
+      try {
+        const rawV = localStorage.getItem('egs-esports-votes-v3');
+        const rawR = localStorage.getItem('egs-esports-voters-v3');
+        const next = {};
+        if (rawV) next.votes = { ...this.state.votes, ...JSON.parse(rawV) };
+        if (rawR) next.voters = JSON.parse(rawR) || [];
+        if (Object.keys(next).length) this.setState(next);
+      } catch (e) {}
+    }
+    this.setupScale();
+    this.initFirebase(0);
+  }
+
+  tally(voters) {
+    const v = { lol: 0, val: 0, cs2: 0, fifa: 0, dota: 0 };
+    voters.forEach(x => (x.picks || []).forEach(p => { if (v[p] != null) v[p] += 1; }));
+    return v;
+  }
+
+  initFirebase(attempt) {
+    if (!this.isOnline()) return;
+    if (!window.firebase || !window.firebase.database) {
+      if (attempt < 50) setTimeout(() => this.initFirebase(attempt + 1), 150);
+      return;
+    }
+    try {
+      if (!window.firebase.apps || !window.firebase.apps.length) {
+        const cfg = {};
+        Object.keys(this.firebaseConfig).forEach(k => { if (this.firebaseConfig[k]) cfg[k] = this.firebaseConfig[k]; });
+        window.firebase.initializeApp(cfg);
+      }
+      this.db = window.firebase.database();
+      this.votersRef = this.db.ref('rooms/' + this.roomId + '/voters');
+      this.useFb = true;
+      this.votersRef.on('value', (snap) => {
+        const val = snap.val() || {};
+        const voters = Object.keys(val)
+          .map(k => val[k])
+          .filter(Boolean)
+          .sort((a, b) => (a.ts || 0) - (b.ts || 0));
+        this.setState({ voters, votes: this.tally(voters) });
+      });
+    } catch (e) {}
+  }
+
+  setupScale() {
+    const fit = () => {
+      const art = document.querySelector('[data-screen-label]');
+      const wrap = art && art.parentElement;
+      if (wrap && wrap.clientWidth) {
+        const s = wrap.clientWidth / 1920;
+        if (Math.abs(s - this.state.fitScale) > 0.0005) this.setState({ fitScale: s });
+      }
+    };
+    fit();
+    this._fit = fit;
+    if (window.ResizeObserver) {
+      this._ro = new ResizeObserver(fit);
+      document.querySelectorAll('[data-screen-label]').forEach(art => {
+        if (art.parentElement) this._ro.observe(art.parentElement);
+      });
+    }
+    window.addEventListener('resize', fit);
+    setTimeout(fit, 200);
+  }
+
+  componentWillUnmount() {
+    if (this._ro) this._ro.disconnect();
+    if (this._fit) window.removeEventListener('resize', this._fit);
+    if (this.votersRef) { try { this.votersRef.off(); } catch (e) {} }
+  }
+
+  persist() {
+    try {
+      localStorage.setItem('egs-esports-votes-v3', JSON.stringify(this.state.votes));
+      localStorage.setItem('egs-esports-voters-v3', JSON.stringify(this.state.voters));
+    } catch (e) {}
+  }
+
+  onName(e) {
+    this.setState({ voterName: e.target.value });
+  }
+
+  toggleSelect(id) {
+    this.setState(s => {
+      const sel = [...s.selected];
+      const i = sel.indexOf(id);
+      if (i >= 0) sel.splice(i, 1);
+      else { sel.push(id); if (sel.length > 2) sel.shift(); }
+      return { selected: sel };
+    });
+  }
+
+  canSubmit() {
+    return this.state.voterName.trim().length > 0 && this.state.selected.length > 0;
+  }
+
+  submit() {
+    if (!this.canSubmit()) return;
+    const record = { name: this.state.voterName.trim(), picks: [...this.state.selected], ts: Date.now() };
+    const done = () => {
+      clearTimeout(this._submitT);
+      this._submitT = setTimeout(() => this.setState({ justSubmitted: false }), 1900);
+    };
+    if (this.useFb && this.votersRef) {
+      try { this.votersRef.push(record); } catch (e) {}
+      this.setState({ selected: [], voterName: '', justSubmitted: true }, done);
+      return;
+    }
+    this.setState(s => {
+      const v = { ...s.votes };
+      record.picks.forEach(id => { v[id] = (v[id] || 0) + 1; });
+      const voters = [...s.voters, record];
+      return { votes: v, voters, selected: [], voterName: '', justSubmitted: true };
+    }, () => { this.persist(); done(); });
+  }
+
+  exportCsv() {
+    const fullName = { lol: 'League of Legends', val: 'Valorant', cs2: 'Counter-Strike 2', fifa: 'FIFA Online 4', dota: 'Dota 2' };
+    const ids = ['lol', 'val', 'cs2', 'fifa', 'dota'];
+    const v = this.state.votes;
+    const total = ids.reduce((a, id) => a + (v[id] || 0), 0);
+    let csv = 'Game,Votes,Percent\r\n';
+    ids.forEach(id => {
+      const c = v[id] || 0;
+      const pct = total ? Math.round((c / total) * 100) : 0;
+      csv += '"' + fullName[id] + '",' + c + ',' + pct + '%\r\n';
+    });
+    csv += '\r\nVoter,Picks\r\n';
+    this.state.voters.forEach(x => {
+      const picks = (x.picks || []).map(p => fullName[p] || p).join(' / ');
+      csv += '"' + String(x.name || '').replace(/"/g, '""') + '","' + picks + '"\r\n';
+    });
+    try {
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'esports-championship-votes.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (e) {}
+  }
+
+  renderVals() {
+    const meta = [
+      { id: 'lol',  name: 'League of Legends', tag: 'Riot · 5v5 MOBA' },
+      { id: 'val',  name: 'Valorant',          tag: 'Riot · Tactical FPS' },
+      { id: 'cs2',  name: 'Counter-Strike 2',  tag: 'Valve · Tactical FPS' },
+      { id: 'fifa', name: 'FIFA Online 4',     tag: 'Nexon · Football' },
+      { id: 'dota', name: 'Dota 2',            tag: 'Valve · 5v5 MOBA' },
+    ];
+    const votes = this.state.votes;
+    const selected = this.state.selected;
+    const total = meta.reduce((a, m) => a + (votes[m.id] || 0), 0);
+    const C = 339.292; // 2 * PI * 54
+
+    const out = {};
+    meta.forEach(m => {
+      const count = votes[m.id] || 0;
+      const pct = total ? Math.round((count / total) * 100) : 0;
+      const active = selected.indexOf(m.id) >= 0;
+      out['g_' + m.id] = {
+        name: m.name,
+        tag: m.tag,
+        count: count,
+        countLabel: count.toLocaleString('en-US'),
+        pct: pct,
+        pctLabel: pct + '%',
+        active: active,
+        inactive: !active,
+        ringOffset: C * (1 - pct / 100),
+        vote: () => this.toggleSelect(m.id),
+      };
+    });
+
+    const voters = this.state.voters;
+    const recent = voters.slice(-3).map(x => x.name).reverse().join(', ');
+    const shortName = { lol: 'LoL', val: 'Valorant', cs2: 'CS2', fifa: 'FIFA', dota: 'Dota 2' };
+    const feedChips = voters.slice(-24).reverse().map(x => ({
+      initials: (String(x.name || '').trim()[0] || '?').toUpperCase(),
+      name: x.name,
+      picksLabel: (x.picks || []).map(p => shortName[p] || p).join('  ·  '),
+    }));
+    const feedHasItems = feedChips.length > 0;
+    const feedMarquee = feedChips.length > 4;
+
+    return {
+      ...out,
+      fitScale: this.state.fitScale,
+      total: total,
+      totalLabel: total.toLocaleString('en-US'),
+      voterName: this.state.voterName,
+      onName: (e) => this.onName(e),
+      submit: () => this.submit(),
+      canSubmit: this.canSubmit(),
+      cannotSubmit: !this.canSubmit(),
+      selectedCount: selected.length,
+      selectedLabel: selected.length + ' / 2 selected',
+      voterCount: voters.length,
+      voterCountLabel: voters.length.toLocaleString('en-US'),
+      hasVoters: voters.length > 0,
+      recentNames: recent,
+      feedChips: feedChips,
+      showEmpty: !feedHasItems,
+      showStatic: feedHasItems && !feedMarquee,
+      showMarquee: feedHasItems && feedMarquee,
+      marqueeDur: Math.max(16, feedChips.length * 4) + 's',
+      exportCsv: () => this.exportCsv(),
+      justSubmitted: this.state.justSubmitted,
+      eyebrow: this.props.eyebrow ?? 'Eastgate Software · Internal 2026',
+      subhead: this.props.subhead ?? 'Vote for your game',
+      closeDate: this.props.closeDate ?? 'Voting closes Fri, Jun 26 · 18:00',
+    };
+  }
+}
+</script>
+</body>
+</html>

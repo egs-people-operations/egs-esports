@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Eastgate Software — Design Tokens (v2 · disciplined)
+   Sources: uploads/brand-reference.md + RTX restraint principles
+   v2 changes: gradients demoted, shadows reduced, radii culled to 3,
+               accents quarantined, headings default to near-black.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
+@font-face { font-family: "Montserrat"; font-weight: 400; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Montserrat"; font-weight: 500; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Montserrat"; font-weight: 600; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Montserrat"; font-weight: 700; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-Bold.ttf") format("truetype"); }
+@font-face { font-family: "Montserrat"; font-weight: 800; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "Montserrat"; font-weight: 900; font-style: normal;  font-display: swap; src: url("./fonts/Montserrat-Black.ttf") format("truetype"); }
+
+:root {
+  /* ---- Brand colors (values unchanged; how they're used is what changed) -- */
+  --color-blue: #4970AE;
+  --color-blue-700: #355492;
+  --color-blue-300: #7694C2;
+  --color-blue-100: #C9D6E8;
+
+  --color-purple: #5D3CB0;
+  --color-purple-700: #432887;
+  --color-purple-300: #8A72C7;
+  --color-purple-100: #D6CCEC;
+
+  /* Neutrals — workhorse layer */
+  --color-mist: #F7F8FA;        /* page-tint surface (was #EEF2F6 — softened) */
+  --color-mist-2: #EEF2F6;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+
+  /* Greyscale */
+  --color-ink-900: #0E1726;     /* RTX-aligned near-black */
+  --color-ink-700: #3A4252;
+  --color-ink-500: #6B7280;
+  --color-ink-300: #94A3B8;
+  --color-ink-100: #CBD5E1;
+  --color-ink-50:  #F1F5F9;
+
+  /* Quarantined: PowerPoint chart palette only. NOT for web/UI. */
+  --chart-indigo:  #4F52B5;
+  --chart-cyan:    #27B6D6;
+  --chart-magenta: #C24BA0;
+
+  /* Semantic */
+  --color-success: #1FA97D;
+  --color-success-bg: #E5F6F0;
+  --color-warning: #F2A93B;
+  --color-warning-bg: #FDF1DC;
+  --color-error:   #E24B4B;
+  --color-error-bg: #FBE3E3;
+
+  /* ---- Semantic foreground / background -------------------------------- */
+  --color-bg:          var(--color-white);
+  --color-bg-alt:      var(--color-mist);
+  --color-bg-inverse:  var(--color-ink-900);
+
+  --color-fg-1:        var(--color-ink-900);   /* default heading + body */
+  --color-fg-2:        var(--color-ink-700);   /* secondary text */
+  --color-fg-3:        var(--color-ink-500);   /* tertiary, captions, eyebrows */
+  --color-fg-on-brand: var(--color-white);
+
+  --color-border:        #E5E7EB;
+  --color-border-strong: #CBD5E1;
+
+  /* Default link is brand blue. Default heading is near-black, NOT blue. */
+  --color-link:        var(--color-blue);
+  --color-link-hover:  var(--color-blue-700);
+
+  /* ---- Gradients --------------------------------------------------------
+     RTX-style discipline: ONE gradient, ONE place per page (a hero panel).
+     Never on cards, sections, icons, chips, or text.
+     The legacy gradients are kept here as the *only* approved hero treatment.
+  */
+  --gradient-hero-only: linear-gradient(135deg, #4970AE 0%, #5D3CB0 100%); /* @kind color */
+
+  /* ---- Typography ------------------------------------------------------- */
+  --font-sans: "Montserrat", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fs-display: 96px;
+  --fs-h1: 64px;
+  --fs-h2: 48px;
+  --fs-h3: 32px;
+  --fs-h4: 24px;
+  --fs-h5: 18px;
+  --fs-subhead: 24px;
+  --fs-p-lg: 20px;
+  --fs-p:    16px;
+  --fs-p-sm: 14px;
+  --fs-min:  12px;
+
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium:  500;    /* @kind font */
+  --fw-semibold: 600;   /* @kind font */
+  --fw-bold: 700;       /* @kind font */
+  --fw-extrabold: 800;  /* @kind font */
+
+  --lh-tight: 1.05;  /* @kind other */
+  --lh-snug:  1.15;   /* @kind other */
+  --lh-normal: 1.45;  /* @kind other */
+  --lh-loose: 1.6;    /* @kind other */
+
+  --tracking-tight: -0.02em;  /* @kind other */
+  --tracking-normal: 0;        /* @kind other */
+  --tracking-wide: 0.04em;     /* @kind other */
+
+  /* ---- Spacing (unchanged — already disciplined) ----------------------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---- Radii (CULLED: was 6, now 3) -----------------------------------
+     --radius-sm: inputs and small chips
+     --radius-md: buttons, cards, panels — the workhorse
+     --radius-pill: status pills, avatars
+     Anything larger reads as decorative.
+  */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation (CULLED: was 4 tiers, now 1 default + 1 modal) -------
+     RTX uses zero shadows. Eastgate retains one hairline shadow for cards
+     so they read on white-on-white pages, but it is barely-there.
+  */
+  --shadow-card:  0 1px 2px rgba(14, 23, 38, 0.04);
+  --shadow-modal: 0 12px 32px rgba(14, 23, 38, 0.10);
+  --shadow-focus: 0 0 0 3px rgba(73, 112, 174, 0.30);
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);  /* @kind other */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);    /* @kind other */
+  --dur-1: 100ms;  /* @kind other */
+  --dur-2: 150ms;  /* @kind other */
+  --dur-3: 250ms;  /* @kind other */
+  --dur-4: 400ms;  /* @kind other */
+  --dur-5: 700ms;  /* @kind other */
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --content-max: 1280px;       /* @kind spacing */
+  --content-max-wide: 1440px;   /* @kind spacing */
+  --header-h: 72px;             /* @kind spacing */
+}
+
+/* ==========================================================================
+   Element defaults
+   ========================================================================== */
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-fg-1);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-size: var(--fs-p);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--color-fg-1); /* near-black, never blue or purple by default */
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); }
+h2 { font-size: var(--fs-h2); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); }
+h3 { font-size: var(--fs-h3); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+h4 { font-size: var(--fs-h4); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+h5 { font-size: var(--fs-h5); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+
+p { margin: 0; text-wrap: pretty; color: var(--color-fg-2); }
+
+a { color: var(--color-link); text-decoration: none; transition: color var(--dur-2) var(--ease-out); }
+a:hover { color: var(--color-link-hover); }
+
+code, pre, kbd, samp { font-family: var(--font-mono); font-size: 0.92em; }
+
+::selection { background: rgba(14, 23, 38, 0.12); color: var(--color-fg-1); }
+
+/* Helpers */
+.egs-display { font-size: var(--fs-display); font-weight: var(--fw-extrabold); line-height: var(--lh-tight); letter-spacing: var(--tracking-tight); }
+.egs-eyebrow { font-size: var(--fs-p-sm); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-fg-3); } /* gray, not blue */
+.egs-mono    { font-family: var(--font-mono); }
+
+/* Restraint guards — apply to fix violations in legacy code */
+.no-gradient-bg   { background: none !important; }
+.no-glass         { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.no-gradient-text { -webkit-background-clip: initial !important; background-clip: initial !important; color: var(--color-fg-1) !important; }
