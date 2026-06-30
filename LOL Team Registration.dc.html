@@ -33,7 +33,7 @@
   </div>
 
   <!-- ===== CONTENT ===== -->
-  <div style="position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:56px 24px 80px;">
+  <div style="position:relative; z-index:1; max-width:1400px; margin:0 auto; padding:56px 24px 80px;">
 
     <!-- BACK TO VOTING -->
     <div style="display:flex; justify-content:flex-start; margin-bottom:24px;">
@@ -79,8 +79,12 @@
       </div>
     </div>
 
+    <!-- ===== BOARD + DISCUSSION (two columns) ===== -->
+    <div style="display:flex; flex-wrap:wrap; gap:28px; align-items:flex-start; margin-top:48px;">
+      <div style="flex:2 1 460px; min-width:0;">
+
     <!-- BOARD HEADER -->
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:48px; margin-bottom:16px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
       <h2 style="font-size:22px; font-weight:800; color:#fff;">Choose your team &amp; claim a lane</h2>
       <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
         <div onClick="{{ exportCsv }}" role="button" style="display:flex; align-items:center; gap:8px; height:40px; padding:0 16px; border-radius:8px; background:linear-gradient(90deg,#4970AE,#5D3CB0); font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 6px 22px rgba(93,60,176,0.4);">
@@ -137,6 +141,14 @@
                       <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.55); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px;">{{ l.pIgn }}</span>
                     </div>
                     <span style="flex:0 0 auto; font-family:var(--font-mono); font-size:10px; font-weight:600; color:rgba(255,255,255,0.75); padding:3px 8px; border-radius:999px; border:1px solid rgba(255,255,255,0.16);">{{ l.pRank }}</span>
+                    <sc-if value="{{ l.canEdit }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ l.editLane }}" role="button" title="Edit" style="flex:0 0 auto; width:28px; height:28px; display:grid; place-items:center; border-radius:7px; border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.6); cursor:pointer; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#fff; border-color:rgba(141,114,199,0.7);">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                      </div>
+                      <div onClick="{{ l.clearLane }}" role="button" title="Remove" style="flex:0 0 auto; width:28px; height:28px; display:grid; place-items:center; border-radius:7px; border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.6); cursor:pointer; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#E24B4B; border-color:rgba(226,75,75,0.6);">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      </div>
+                    </sc-if>
                   </div>
                 </sc-if>
 
@@ -248,9 +260,10 @@
         </div>
       </sc-for>
     </div>
+      </div><!-- /left column -->
 
-    <!-- ===== DISCUSSION ===== -->
-    <div style="margin-top:52px;">
+      <!-- ===== DISCUSSION ===== -->
+      <div style="flex:1 1 300px; min-width:0; align-self:flex-start;">
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
         <h2 style="font-size:22px; font-weight:800; color:#fff;">Discussion</h2>
         <span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.45);">· {{ commentCountLabel }} messages</span>
@@ -294,7 +307,8 @@
           </div>
         </sc-for>
       </div>
-    </div>
+    </div><!-- /discussion right column -->
+    </div><!-- /board + discussion row -->
 
     <div style="margin-top:44px; text-align:center; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.36);">Eastgate Software internal tournament · {{ deadlineLabel }} · Contact the organizers via the internal channel</div>
   </div>
@@ -304,7 +318,7 @@
   &quot;$preview&quot;: { &quot;width&quot;: 1080, &quot;height&quot;: 900 },
   &quot;eyebrow&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Eastgate Software · Internal Tournament 2026&quot;, &quot;tsType&quot;: &quot;string&quot; },
   &quot;eventName&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;LEAGUE OF LEGENDS TEAM BOARD&quot;, &quot;tsType&quot;: &quot;string&quot; },
-  &quot;subtitle&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Six teams, five lanes each. Pick a team, claim your role, and lock in your spot. Talk it out in the discussion below.&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;subtitle&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Pick a team, claim your role, and lock in your spot.&quot;, &quot;tsType&quot;: &quot;string&quot; },
   &quot;deadlineLabel&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;18:00 · Jul 6, 2026&quot;, &quot;tsType&quot;: &quot;string&quot; }
 }">
 class Component extends DCLogic {
@@ -402,7 +416,7 @@ class Component extends DCLogic {
       this.playersRef = this.db.ref('rooms/' + this.roomId + '/players');
       this.playersRef.on('value', (snap) => {
         const val = snap.val() || {};
-        const players = Object.keys(val).map(k => val[k]).filter(Boolean).sort((a, b) => (a.ts || 0) - (b.ts || 0));
+        const players = Object.keys(val).map(k => ({ ...val[k], _key: k })).filter(Boolean).sort((a, b) => (a.ts || 0) - (b.ts || 0));
         this.setState({ players });
       });
       this.commentsRef = this.db.ref('rooms/' + this.roomId + '/comments');
@@ -441,13 +455,25 @@ class Component extends DCLogic {
     if (this.isClosed()) return;
     this.setState({ claim: { team, role }, claimName: '', claimIgn: '', claimRank: '' });
   }
+  editClaim(team, role, occ) {
+    if (this.isClosed() || !occ) return;
+    this.setState({ claim: { team, role, key: occ._key, editing: true }, claimName: occ.name || '', claimIgn: occ.ign || '', claimRank: occ.rank && occ.rank !== '—' ? occ.rank : '' });
+  }
+  clearLane(occ) {
+    if (this.isClosed() || !occ) return;
+    if (this.useFb && this.playersRef && occ._key) {
+      try { this.playersRef.child(occ._key).remove(); } catch (e) {}
+      return;
+    }
+    this.setState(s => ({ players: s.players.filter(p => p !== occ && p._key !== occ._key) }), () => this.persistPlayers());
+  }
   cancelClaim() { this.setState({ claim: null }); }
 
   canClaim() { return !!this.state.claim && this.state.claimName.trim().length > 0 && this.state.claimIgn.trim().length > 0; }
 
   submitClaim() {
     if (!this.canClaim()) return;
-    const { team, role } = this.state.claim;
+    const { team, role, key, editing } = this.state.claim;
     const isSub = role === 'sub';
     const rec = {
       team, role: isSub ? 'sub' : role, sub: isSub,
@@ -456,11 +482,21 @@ class Component extends DCLogic {
       rank: this.state.claimRank || '—',
       ts: Date.now(),
     };
+    if (editing && key) {
+      if (this.useFb && this.playersRef) {
+        try { this.playersRef.child(key).update({ name: rec.name, ign: rec.ign, rank: rec.rank }); } catch (e) {}
+        this.setState({ claim: null });
+        return;
+      }
+      this.setState(s => ({ players: s.players.map(p => p._key === key ? { ...p, name: rec.name, ign: rec.ign, rank: rec.rank } : p), claim: null }), () => this.persistPlayers());
+      return;
+    }
     if (this.useFb && this.playersRef) {
       try { this.playersRef.push(rec); } catch (e) {}
       this.setState({ claim: null });
       return;
     }
+    rec._key = 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
     this.setState(s => ({ players: [...s.players, rec], claim: null }), () => this.persistPlayers());
   }
 
@@ -540,8 +576,11 @@ class Component extends DCLogic {
         const empty = !occ && !claiming;
         if (occupied) filledTotal++;
         return {
-          laneId: l.id, laneName: l.name, mono: l.mono, joinLabel: 'Join ' + l.name,
+          laneId: l.id, laneName: l.name, mono: l.mono, joinLabel: (claiming && claim && claim.editing) ? 'Save changes' : 'Join ' + l.name,
           occupied, claiming,
+          canEdit: occupied && !closed,
+          editLane: () => this.editClaim(t.id, l.id, occ),
+          clearLane: () => this.clearLane(occ),
           showClaim: empty && !closed,
           showClosed: empty && closed,
           pName: occ ? occ.name : '', pIgn: occ ? occ.ign : '', pRank: occ ? (occ.rank || '—') : '',
@@ -589,7 +628,7 @@ class Component extends DCLogic {
     return {
       eyebrow: this.props.eyebrow ?? 'Eastgate Software · Internal Tournament 2026',
       eventName: this.props.eventName ?? 'LEAGUE OF LEGENDS TEAM BOARD',
-      subtitle: this.props.subtitle ?? 'Six teams, five lanes each. Pick a team, claim your role, and lock in your spot. Talk it out in the discussion below.',
+      subtitle: this.props.subtitle ?? 'Pick a team, claim your role, and lock in your spot.',
       deadlineLabel: this.props.deadlineLabel ?? '18:00 · Jul 6, 2026',
 
       cdBlocks, closed, notClosed: !closed,
