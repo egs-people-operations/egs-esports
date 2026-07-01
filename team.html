@@ -124,7 +124,15 @@
                 </div>
               </sc-if>
             </div>
-            <span style="flex:0 0 auto; font-family:var(--font-mono); font-size:12px; font-weight:600; color:{{ t.countColor }};">{{ t.filledLabel }}</span>
+            <div style="flex:0 0 auto; display:flex; align-items:center; gap:9px;">
+              <sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}">
+                <span style="display:inline-flex; align-items:center; gap:5px; font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#ffb4b4; background:rgba(226,75,75,0.14); border:1px solid rgba(226,75,75,0.4); padding:4px 9px; border-radius:999px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Locked</span>
+              </sc-if>
+              <span style="font-family:var(--font-mono); font-size:12px; font-weight:600; color:{{ t.countColor }};">{{ t.filledLabel }}</span>
+              <sc-if value="{{ t.isAdmin }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ t.toggleLock }}" role="button" title="Admin lock/unlock" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 11px; border-radius:999px; background:{{ t.lockBtnBg }}; border:1px solid {{ t.lockBtnBorder }}; color:{{ t.lockBtnColor }}; font-family:var(--font-mono); font-size:11px; font-weight:700; cursor:pointer; transition:background 120ms ease, border-color 120ms ease;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>{{ t.lockLabel }}</div>
+              </sc-if>
+            </div>
           </div>
 
           <!-- Lanes -->
@@ -157,6 +165,10 @@
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     Claim
                   </div>
+                </sc-if>
+
+                <sc-if value="{{ l.showLocked }}" hint-placeholder-val="{{ false }}">
+                  <span style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>locked</span>
                 </sc-if>
 
                 <sc-if value="{{ l.showClosed }}" hint-placeholder-val="{{ false }}">
@@ -399,6 +411,7 @@ class Component extends DCLogic {
     replyName: '',
     replyText: '',
     teamNames: {},
+    locks: {},
     nameDrafts: {},
     editingTeam: null,
     now: Date.now(),
@@ -449,10 +462,12 @@ class Component extends DCLogic {
         const rp = localStorage.getItem('egs-lol-players-v1');
         const rc = localStorage.getItem('egs-lol-comments-v1');
         const rn = localStorage.getItem('egs-lol-teamnames-v1');
+        const rl = localStorage.getItem('egs-lol-locks-v1');
         const next = {};
         if (rp) next.players = JSON.parse(rp) || [];
         if (rc) next.comments = JSON.parse(rc) || [];
         if (rn) next.teamNames = JSON.parse(rn) || {};
+        if (rl) next.locks = JSON.parse(rl) || {};
         if (Object.keys(next).length) this.setState(next);
       } catch (e) {}
     }
@@ -465,6 +480,7 @@ class Component extends DCLogic {
     if (this.playersRef) { try { this.playersRef.off(); } catch (e) {} }
     if (this.commentsRef) { try { this.commentsRef.off(); } catch (e) {} }
     if (this.teamNamesRef) { try { this.teamNamesRef.off(); } catch (e) {} }
+    if (this.locksRef) { try { this.locksRef.off(); } catch (e) {} }
   }
 
   initFirebase(attempt) {
@@ -495,12 +511,27 @@ class Component extends DCLogic {
       });
       this.teamNamesRef = this.db.ref('rooms/' + this.roomId + '/teamNames');
       this.teamNamesRef.on('value', (snap) => { this.setState({ teamNames: snap.val() || {} }); });
+      this.locksRef = this.db.ref('rooms/' + this.roomId + '/locks');
+      this.locksRef.on('value', (snap) => { this.setState({ locks: snap.val() || {} }); });
     } catch (e) {}
   }
 
   persistPlayers() { try { localStorage.setItem('egs-lol-players-v1', JSON.stringify(this.state.players)); } catch (e) {} }
   persistComments() { try { localStorage.setItem('egs-lol-comments-v1', JSON.stringify(this.state.comments)); } catch (e) {} }
   persistTeamNames() { try { localStorage.setItem('egs-lol-teamnames-v1', JSON.stringify(this.state.teamNames)); } catch (e) {} }
+  persistLocks() { try { localStorage.setItem('egs-lol-locks-v1', JSON.stringify(this.state.locks)); } catch (e) {} }
+
+  isAdminUser() { return (typeof location !== 'undefined') && /(?:[?&])admin=egs2026(?:&|$)/i.test(location.search || ''); }
+  isLocked(teamId) { return !!this.state.locks[teamId]; }
+  toggleLock(teamId) {
+    if (!this.isAdminUser()) return;
+    const next = !this.isLocked(teamId);
+    if (this.useFb && this.locksRef) {
+      try { next ? this.locksRef.child(teamId).set(true) : this.locksRef.child(teamId).remove(); } catch (e) {}
+      return;
+    }
+    this.setState(s => { const locks = { ...s.locks }; if (next) locks[teamId] = true; else delete locks[teamId]; return { locks }; }, () => this.persistLocks());
+  }
 
   onNameDraft(team, val) { this.setState(s => ({ nameDrafts: { ...s.nameDrafts, [team]: val } })); }
   editName(team, current) { this.setState(s => ({ editingTeam: team, nameDrafts: { ...s.nameDrafts, [team]: current } })); }
@@ -520,15 +551,15 @@ class Component extends DCLogic {
   isClosed() { return this.state.now > this.deadline; }
 
   openClaim(team, role) {
-    if (this.isClosed()) return;
+    if (this.isClosed() || this.isLocked(team)) return;
     this.setState({ claim: { team, role }, claimName: '', claimIgn: '', claimRank: '' });
   }
   editClaim(team, role, occ) {
-    if (this.isClosed() || !occ) return;
+    if (this.isClosed() || this.isLocked(team) || !occ) return;
     this.setState({ claim: { team, role, key: occ._key, editing: true }, claimName: occ.name || '', claimIgn: occ.ign || '', claimRank: occ.rank && occ.rank !== '—' ? occ.rank : '' });
   }
   clearLane(occ) {
-    if (this.isClosed() || !occ) return;
+    if (this.isClosed() || !occ || this.isLocked(occ.team)) return;
     if (this.useFb && this.playersRef && occ._key) {
       try { this.playersRef.child(occ._key).remove(); } catch (e) {}
       return;
@@ -682,6 +713,7 @@ class Component extends DCLogic {
 
     const teamCards = this.TEAMS.map(t => {
       const tp = players.filter(p => p.team === t.id);
+      const locked = !!this.state.locks[t.id];
       const savedName = (this.state.teamNames[t.id] || '').trim();
       const editing = this.state.editingTeam === t.id;
       const draft = this.state.nameDrafts[t.id] != null ? this.state.nameDrafts[t.id] : (editing ? savedName : '');
@@ -694,10 +726,11 @@ class Component extends DCLogic {
         return {
           laneId: l.id, laneName: l.name, mono: l.mono, joinLabel: (claiming && claim && claim.editing) ? 'Save changes' : 'Join ' + l.name,
           occupied, claiming,
-          canEdit: occupied && !closed,
+          canEdit: occupied && !closed && !locked,
           editLane: () => this.editClaim(t.id, l.id, occ),
           clearLane: () => this.clearLane(occ),
-          showClaim: empty && !closed,
+          showClaim: empty && !closed && !locked,
+          showLocked: empty && locked && !closed,
           showClosed: empty && closed,
           pName: occ ? occ.name : '', pIgn: occ ? occ.ign : '', pRank: occ ? (occ.rank || '—') : '',
           monoBg: occupied ? 'rgba(141,114,199,0.22)' : 'rgba(255,255,255,0.05)',
@@ -729,7 +762,14 @@ class Component extends DCLogic {
         filledLabel: filled + '/5',
         countColor: filled >= 5 ? '#27D07A' : 'rgba(255,255,255,0.55)',
         cardBorder: filled >= 5 ? 'rgba(39,208,122,0.3)' : 'rgba(255,255,255,0.1)',
-        canAddSub: !closed,
+        locked,
+        isAdmin: this.isAdminUser(),
+        lockLabel: locked ? 'Unlock' : 'Lock',
+        lockBtnBg: locked ? 'rgba(226,75,75,0.14)' : 'rgba(255,255,255,0.05)',
+        lockBtnBorder: locked ? 'rgba(226,75,75,0.5)' : 'rgba(255,255,255,0.16)',
+        lockBtnColor: locked ? '#ffb4b4' : 'rgba(255,255,255,0.6)',
+        toggleLock: () => this.toggleLock(t.id),
+        canAddSub: !closed && !locked,
         claimingSub: !!(claim && claim.team === t.id && claim.role === 'sub'),
         openSub: () => this.openClaim(t.id, 'sub'),
       };
