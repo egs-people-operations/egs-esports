@@ -273,7 +273,7 @@
       <sc-if value="{{ notClosed }}" hint-placeholder-val="{{ true }}">
         <div style="border:1px solid rgba(255,255,255,0.1); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px;">
           <input value="{{ commentName }}" onChange="{{ onCommentName }}" placeholder="Your name" maxlength="40" style="height:44px; padding:0 14px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:14px; font-weight:600; outline:none;" style-focus="border-color:#8A72C7;">
-          <textarea value="{{ commentText }}" onChange="{{ onCommentText }}" placeholder="Coordinate scrims, recruit a sub, trash talk responsibly…" rows="2" maxlength="280" style="padding:12px 14px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:14px; line-height:1.5; outline:none; resize:vertical; min-height:54px;" style-focus="border-color:#8A72C7;"></textarea>
+          <textarea value="{{ commentText }}" onChange="{{ onCommentText }}" onKeyDown="{{ onCommentKey }}" placeholder="Coordinate scrims, recruit a sub, trash talk responsibly…  (Enter to post · Shift+Enter for a new line)" rows="2" maxlength="280" style="padding:12px 14px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:14px; line-height:1.5; outline:none; resize:vertical; min-height:54px;" style-focus="border-color:#8A72C7;"></textarea>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
             <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">{{ commentLenLabel }}</span>
             <sc-if value="{{ canPost }}" hint-placeholder-val="{{ false }}">
@@ -295,15 +295,79 @@
       </sc-if>
       <div style="display:flex; flex-direction:column; gap:10px;">
         <sc-for list="{{ comments }}" as="c" hint-placeholder-count="3">
-          <div style="display:flex; gap:12px; border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.03); padding:13px 15px;">
-            <span style="flex:0 0 auto; width:36px; height:36px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:14px; font-weight:800;">{{ c.initials }}</span>
-            <div style="flex:1 1 auto; min-width:0;">
-              <div style="display:flex; align-items:baseline; gap:9px;">
-                <span style="font-size:14px; font-weight:700; color:#fff;">{{ c.name }}</span>
-                <span style="flex:0 0 auto; white-space:nowrap; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">{{ c.timeLabel }}</span>
+          <div style="border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.03); padding:13px 15px;">
+            <div style="display:flex; gap:12px;">
+              <span style="flex:0 0 auto; width:36px; height:36px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:14px; font-weight:800;">{{ c.initials }}</span>
+              <div style="flex:1 1 auto; min-width:0;">
+                <div style="display:flex; align-items:baseline; gap:9px;">
+                  <span style="font-size:14px; font-weight:700; color:#fff;">{{ c.name }}</span>
+                  <span style="flex:0 0 auto; white-space:nowrap; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">{{ c.timeLabel }}</span>
+                  <sc-if value="{{ c.isAdmin }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ c.deleteComment }}" role="button" title="Delete (admin)" style="margin-left:auto; flex:0 0 auto; width:22px; height:22px; display:grid; place-items:center; border-radius:6px; color:rgba(255,255,255,0.35); cursor:pointer;" style-hover="color:#E24B4B; background:rgba(226,75,75,0.12);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                  </sc-if>
+                </div>
+                <p style="margin-top:3px; font-size:14px; color:rgba(255,255,255,0.82); line-height:1.5; white-space:pre-wrap; word-break:break-word;">{{ c.text }}</p>
+
+                <!-- reactions + reply toggle -->
+                <div style="display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap;">
+                  <div onClick="{{ c.rLike.toggle }}" role="button" title="Nice" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLike.chipBg }}; border:1px solid {{ c.rLike.chipBorder }}; color:{{ c.rLike.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"></path><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path></svg>
+                    {{ c.rLike.countLabel }}
+                  </div>
+                  <div onClick="{{ c.rLove.toggle }}" role="button" title="Love" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLove.chipBg }}; border:1px solid {{ c.rLove.chipBorder }}; color:{{ c.rLove.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                    {{ c.rLove.countLabel }}
+                  </div>
+                  <div onClick="{{ c.rFire.toggle }}" role="button" title="On fire" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rFire.chipBg }}; border:1px solid {{ c.rFire.chipBorder }}; color:{{ c.rFire.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                    {{ c.rFire.countLabel }}
+                  </div>
+                  <div onClick="{{ c.rLol.toggle }}" role="button" title="Haha" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLol.chipBg }}; border:1px solid {{ c.rLol.chipBorder }}; color:{{ c.rLol.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M18 13a6 6 0 0 1-6 5 6 6 0 0 1-6-5h12Z"></path><line x1="9" x2="9.01" y1="9" y2="9"></line><line x1="15" x2="15.01" y1="9" y2="9"></line></svg>
+                    {{ c.rLol.countLabel }}
+                  </div>
+                  <div onClick="{{ c.toggleReply }}" role="button" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 11px; border-radius:999px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.62); cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:color 120ms ease, border-color 120ms ease;" style-hover="color:#fff; border-color:rgba(141,114,199,0.55);">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></svg>
+                    Reply {{ c.replyCountLabel }}
+                  </div>
+                </div>
               </div>
-              <p style="margin-top:3px; font-size:14px; color:rgba(255,255,255,0.82); line-height:1.5; white-space:pre-wrap; word-break:break-word;">{{ c.text }}</p>
             </div>
+
+            <!-- replies -->
+            <sc-if value="{{ c.hasReplies }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:11px; margin-left:48px; display:flex; flex-direction:column; gap:9px; border-left:2px solid rgba(141,114,199,0.28); padding-left:13px;">
+                <sc-for list="{{ c.replies }}" as="r" hint-placeholder-count="1">
+                  <div style="display:flex; gap:9px;">
+                    <span style="flex:0 0 auto; width:28px; height:28px; border-radius:999px; background:rgba(141,114,199,0.25); color:#cdbdf0; display:grid; place-items:center; font-size:12px; font-weight:800;">{{ r.initials }}</span>
+                    <div style="flex:1 1 auto; min-width:0;">
+                      <div style="display:flex; align-items:baseline; gap:8px;">
+                        <span style="font-size:13px; font-weight:700; color:#fff;">{{ r.name }}</span>
+                        <span style="flex:0 0 auto; white-space:nowrap; font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.4);">{{ r.timeLabel }}</span>
+                      </div>
+                      <p style="margin-top:2px; font-size:13px; color:rgba(255,255,255,0.8); line-height:1.5; white-space:pre-wrap; word-break:break-word;">{{ r.text }}</p>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <!-- reply composer -->
+            <sc-if value="{{ c.replyingHere }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:11px; margin-left:48px; display:flex; flex-direction:column; gap:8px;">
+                <input value="{{ replyName }}" onChange="{{ onReplyName }}" placeholder="Your name" maxlength="40" style="height:40px; padding:0 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:13px; font-weight:600; outline:none;" style-focus="border-color:#8A72C7;">
+                <textarea value="{{ replyText }}" onChange="{{ onReplyText }}" onKeyDown="{{ onReplyKey }}" placeholder="Write a reply…  (Enter to send)" rows="2" maxlength="280" style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:13px; line-height:1.5; outline:none; resize:vertical; min-height:44px;" style-focus="border-color:#8A72C7;"></textarea>
+                <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+                  <div onClick="{{ c.toggleReply }}" role="button" style="height:36px; padding:0 14px; display:flex; align-items:center; border-radius:8px; color:rgba(255,255,255,0.55); font-size:12px; font-weight:700; cursor:pointer;">Cancel</div>
+                  <sc-if value="{{ c.canReply }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ c.submitReply }}" role="button" style="height:36px; padding:0 18px; display:flex; align-items:center; gap:6px; border-radius:8px; background:linear-gradient(90deg,#4970AE,#5D3CB0); color:#fff; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 5px 14px rgba(93,60,176,0.4);">Reply</div>
+                  </sc-if>
+                  <sc-if value="{{ c.cannotReply }}" hint-placeholder-val="{{ true }}">
+                    <div style="height:36px; padding:0 18px; display:flex; align-items:center; border-radius:8px; background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.35); font-size:12px; font-weight:700; border:1px solid rgba(255,255,255,0.1);">Reply</div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
           </div>
         </sc-for>
       </div>
@@ -331,6 +395,9 @@ class Component extends DCLogic {
     claimRank: '',
     commentName: '',
     commentText: '',
+    replyTo: null,
+    replyName: '',
+    replyText: '',
     teamNames: {},
     nameDrafts: {},
     editingTeam: null,
@@ -355,6 +422,7 @@ class Component extends DCLogic {
   };
   roomId = "lol-team-board-2026";
   useFb = false;
+  uid = (() => { try { let u = localStorage.getItem('egs-uid'); if (!u) { u = 'u-' + Math.random().toString(36).slice(2, 10); localStorage.setItem('egs-uid', u); } return u; } catch (e) { return 'u-' + Math.random().toString(36).slice(2, 10); } })();
   deadline = new Date(2026, 6, 6, 18, 0, 0).getTime(); // 18:00, Jul 6 2026
 
   TEAMS = [
@@ -422,7 +490,7 @@ class Component extends DCLogic {
       this.commentsRef = this.db.ref('rooms/' + this.roomId + '/comments');
       this.commentsRef.on('value', (snap) => {
         const val = snap.val() || {};
-        const comments = Object.keys(val).map(k => val[k]).filter(Boolean).sort((a, b) => (a.ts || 0) - (b.ts || 0));
+        const comments = Object.keys(val).map(k => ({ ...val[k], _key: k })).filter(Boolean).sort((a, b) => (a.ts || 0) - (b.ts || 0));
         this.setState({ comments });
       });
       this.teamNamesRef = this.db.ref('rooms/' + this.roomId + '/teamNames');
@@ -511,7 +579,55 @@ class Component extends DCLogic {
       this.setState({ commentText: '' });
       return;
     }
+    rec._key = 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
     this.setState(s => ({ comments: [...s.comments, rec], commentText: '' }), () => this.persistComments());
+  }
+
+  toggleReaction(commentKey, rid) {
+    const uid = this.uid;
+    const c = this.state.comments.find(x => x._key === commentKey);
+    const active = !!(c && c.reactions && c.reactions[rid] && c.reactions[rid][uid]);
+    if (this.useFb && this.commentsRef) {
+      const ref = this.commentsRef.child(commentKey).child('reactions').child(rid).child(uid);
+      try { active ? ref.remove() : ref.set(true); } catch (e) {}
+      return;
+    }
+    this.setState(s => ({ comments: s.comments.map(x => {
+      if (x._key !== commentKey) return x;
+      const reactions = { ...(x.reactions || {}) };
+      const set = { ...(reactions[rid] || {}) };
+      if (set[uid]) delete set[uid]; else set[uid] = true;
+      reactions[rid] = set;
+      return { ...x, reactions };
+    }) }), () => this.persistComments());
+  }
+
+  submitReply(commentKey) {
+    if (this.isClosed() || !commentKey) return;
+    const name = (this.state.replyName || '').trim() || (this.state.commentName || '').trim() || 'Anonymous';
+    const text = (this.state.replyText || '').trim();
+    if (!text) return;
+    const rec = { name, text, ts: Date.now() };
+    if (this.useFb && this.commentsRef) {
+      try { this.commentsRef.child(commentKey).child('replies').push(rec); } catch (e) {}
+      this.setState({ replyText: '', replyTo: null });
+      return;
+    }
+    this.setState(s => ({ comments: s.comments.map(x => {
+      if (x._key !== commentKey) return x;
+      const replies = { ...(x.replies || {}) };
+      replies['local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6)] = rec;
+      return { ...x, replies };
+    }), replyText: '', replyTo: null }), () => this.persistComments());
+  }
+
+  deleteComment(commentKey) {
+    if (!commentKey) return;
+    if (this.useFb && this.commentsRef) {
+      try { this.commentsRef.child(commentKey).remove(); } catch (e) {}
+      return;
+    }
+    this.setState(s => ({ comments: s.comments.filter(x => x._key !== commentKey) }), () => this.persistComments());
   }
 
   exportCsv() {
@@ -619,9 +735,42 @@ class Component extends DCLogic {
       };
     });
 
-    const comments = this.state.comments.slice().sort((a, b) => (b.ts || 0) - (a.ts || 0)).map(c => ({
-      initials: this.initials(c.name), name: c.name, text: c.text, timeLabel: this.timeAgo(c.ts),
-    }));
+    const uid = this.uid;
+    const isAdmin = (typeof location !== 'undefined') && /(?:[?&])admin=egs2026(?:&|$)/i.test(location.search || '');
+    const comments = this.state.comments.slice().sort((a, b) => (b.ts || 0) - (a.ts || 0)).map(c => {
+      const key = c._key;
+      const ro = c.reactions || {};
+      const mk = (rid) => {
+        const m = ro[rid] || {};
+        const count = Object.keys(m).length;
+        const active = !!m[uid];
+        return {
+          count, countLabel: count > 0 ? String(count) : '',
+          chipBg: active ? 'rgba(141,114,199,0.22)' : 'rgba(255,255,255,0.04)',
+          chipBorder: active ? 'rgba(141,114,199,0.6)' : 'rgba(255,255,255,0.12)',
+          chipColor: active ? '#cdbdf0' : 'rgba(255,255,255,0.55)',
+          toggle: () => this.toggleReaction(key, rid),
+        };
+      };
+      const rep = c.replies || {};
+      const replies = Object.keys(rep).map(k => rep[k]).filter(Boolean).sort((a, b) => (a.ts || 0) - (b.ts || 0)).map(r => ({
+        initials: this.initials(r.name), name: r.name, text: r.text, timeLabel: this.timeAgo(r.ts),
+      }));
+      const replyingHere = this.state.replyTo === key;
+      return {
+        initials: this.initials(c.name), name: c.name, text: c.text, timeLabel: this.timeAgo(c.ts),
+        rLike: mk('like'), rLove: mk('love'), rFire: mk('fire'), rLol: mk('lol'),
+        replies, hasReplies: replies.length > 0,
+        replyCountLabel: replies.length > 0 ? String(replies.length) : '',
+        replyingHere,
+        toggleReply: () => this.setState(s => ({ replyTo: s.replyTo === key ? null : key, replyText: '' })),
+        submitReply: () => this.submitReply(key),
+        canReply: replyingHere && this.state.replyText.trim().length > 0,
+        cannotReply: !(replyingHere && this.state.replyText.trim().length > 0),
+        isAdmin,
+        deleteComment: () => this.deleteComment(key),
+      };
+    });
 
     const ctLen = this.state.commentText.length;
 
@@ -659,6 +808,13 @@ class Component extends DCLogic {
       canPost: !closed && this.state.commentName.trim().length > 0 && this.state.commentText.trim().length > 0,
       cannotPost: !(!closed && this.state.commentName.trim().length > 0 && this.state.commentText.trim().length > 0),
       postComment: () => this.postComment(),
+      onCommentKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.postComment(); } },
+
+      replyName: this.state.replyName,
+      replyText: this.state.replyText,
+      onReplyName: (e) => this.setState({ replyName: e.target.value }),
+      onReplyText: (e) => this.setState({ replyText: e.target.value }),
+      onReplyKey: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (this.state.replyTo) this.submitReply(this.state.replyTo); } },
 
       isAdmin: (typeof location !== 'undefined') && /(?:[?&])admin=egs2026(?:&|$)/i.test(location.search || ''),
       exportCsv: () => this.exportCsv(),
