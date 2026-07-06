@@ -157,6 +157,11 @@
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                       </div>
                     </sc-if>
+                    <sc-if value="{{ l.showAdminRemove }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ l.clearLane }}" role="button" title="Remove (admin)" style="flex:0 0 auto; width:28px; height:28px; display:grid; place-items:center; border-radius:7px; border:1px solid rgba(226,75,75,0.4); color:#ffb4b4; background:rgba(226,75,75,0.12); cursor:pointer; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#fff; background:rgba(226,75,75,0.28);">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      </div>
+                    </sc-if>
                   </div>
                 </sc-if>
 
@@ -233,6 +238,9 @@
                       <span style="font-size:12px; font-weight:700; white-space:nowrap;">{{ s.name }}</span>
                       <span style="font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.5); white-space:nowrap;">{{ s.ign }} · {{ s.rank }}</span>
                     </div>
+                    <sc-if value="{{ s.showAdminRemove }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ s.removeSub }}" role="button" title="Remove (admin)" style="width:20px; height:20px; display:grid; place-items:center; border-radius:999px; color:#ffb4b4; cursor:pointer;" style-hover="color:#fff; background:rgba(226,75,75,0.3);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+                    </sc-if>
                   </div>
                 </sc-for>
               </div>
@@ -559,7 +567,8 @@ class Component extends DCLogic {
     this.setState({ claim: { team, role, key: occ._key, editing: true }, claimName: occ.name || '', claimIgn: occ.ign || '', claimRank: occ.rank && occ.rank !== '—' ? occ.rank : '' });
   }
   clearLane(occ) {
-    if (this.isClosed() || !occ || this.isLocked(occ.team)) return;
+    if (this.isClosed() || !occ) return;
+    if (this.isLocked(occ.team) && !this.isAdminUser()) return;
     if (this.useFb && this.playersRef && occ._key) {
       try { this.playersRef.child(occ._key).remove(); } catch (e) {}
       return;
@@ -714,6 +723,7 @@ class Component extends DCLogic {
     const teamCards = this.TEAMS.map(t => {
       const tp = players.filter(p => p.team === t.id);
       const locked = !!this.state.locks[t.id];
+      const isAdmin = this.isAdminUser();
       const savedName = (this.state.teamNames[t.id] || '').trim();
       const editing = this.state.editingTeam === t.id;
       const draft = this.state.nameDrafts[t.id] != null ? this.state.nameDrafts[t.id] : (editing ? savedName : '');
@@ -727,6 +737,7 @@ class Component extends DCLogic {
           laneId: l.id, laneName: l.name, mono: l.mono, joinLabel: (claiming && claim && claim.editing) ? 'Save changes' : 'Join ' + l.name,
           occupied, claiming,
           canEdit: occupied && !closed && !locked,
+          showAdminRemove: occupied && isAdmin && locked,
           editLane: () => this.editClaim(t.id, l.id, occ),
           clearLane: () => this.clearLane(occ),
           showClaim: empty && !closed && !locked,
@@ -756,7 +767,7 @@ class Component extends DCLogic {
         editName: () => this.editName(t.id, savedName),
         cancelName: () => this.cancelName(),
         lanes,
-        subs: subs.map(s => ({ initials: this.initials(s.name), name: s.name, ign: s.ign, rank: s.rank || '—' })),
+        subs: subs.map(s => ({ initials: this.initials(s.name), name: s.name, ign: s.ign, rank: s.rank || '—', showAdminRemove: isAdmin, removeSub: () => this.clearLane(s) })),
         hasSubs: subs.length > 0,
         subCountLabel: subs.length ? ('· ' + subs.length) : '',
         filledLabel: filled + '/5',
