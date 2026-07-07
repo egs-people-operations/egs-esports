@@ -37,7 +37,7 @@
 
     <!-- BACK TO VOTING -->
     <div style="display:flex; justify-content:flex-start; margin-bottom:24px;">
-      <a href="./" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); text-decoration:none; border:1px solid rgba(141,114,199,0.45); padding:8px 16px; border-radius:999px; white-space:nowrap; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#fff; border-color:rgba(141,114,199,0.9);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to voting</a>
+      <a href="Esports%20Championship%20Poster.dc.html" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); text-decoration:none; border:1px solid rgba(141,114,199,0.45); padding:8px 16px; border-radius:999px; white-space:nowrap; transition:color 150ms ease, border-color 150ms ease;" style-hover="color:#fff; border-color:rgba(141,114,199,0.9);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Back to voting</a>
     </div>
 
     <!-- HEADER -->
@@ -79,9 +79,9 @@
       </div>
     </div>
 
-    <!-- ===== BOARD + DISCUSSION (two columns) ===== -->
-    <div style="display:flex; flex-wrap:wrap; gap:28px; align-items:flex-start; margin-top:48px;">
-      <div style="flex:2 1 460px; min-width:0;">
+    <!-- ===== BOARD ===== -->
+    <div id="board" style="margin-top:48px;">
+      <div>
 
     <!-- BOARD HEADER -->
     <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
@@ -102,27 +102,8 @@
           <!-- Card header -->
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; min-height:36px;">
             <div style="display:flex; align-items:center; gap:11px; flex:1 1 auto; min-width:0;">
-              <span style="flex:0 0 auto; width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:14px; font-weight:800;">{{ t.tag }}</span>
-              <sc-if value="{{ t.nameSet }}" hint-placeholder-val="{{ false }}">
-                <div onClick="{{ t.editName }}" role="button" title="Edit name" style="display:flex; align-items:center; gap:8px; cursor:pointer; min-width:0;">
-                  <span style="font-size:18px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.nameValue }}</span>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
-                </div>
-              </sc-if>
-              <sc-if value="{{ t.nameEditing }}" hint-placeholder-val="{{ true }}">
-                <div style="display:flex; align-items:center; gap:7px; flex:1 1 auto; min-width:0;">
-                  <input value="{{ t.draftValue }}" onChange="{{ t.onNameDraft }}" placeholder="Name this team" maxlength="28" style="flex:1 1 auto; min-width:0; width:100%; height:36px; padding:0 12px; border-radius:7px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); color:#fff; font-size:15px; font-weight:700; outline:none;" style-focus="border-color:#8A72C7;">
-                  <sc-if value="{{ t.canSaveName }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ t.saveName }}" role="button" style="flex:0 0 auto; height:36px; padding:0 14px; display:flex; align-items:center; border-radius:7px; background:linear-gradient(90deg,#4970AE,#5D3CB0); color:#fff; font-size:13px; font-weight:700; cursor:pointer;">Save</div>
-                  </sc-if>
-                  <sc-if value="{{ t.cannotSaveName }}" hint-placeholder-val="{{ true }}">
-                    <div style="flex:0 0 auto; height:36px; padding:0 14px; display:flex; align-items:center; border-radius:7px; background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.38); font-size:13px; font-weight:700; border:1px solid rgba(255,255,255,0.1);">Save</div>
-                  </sc-if>
-                  <sc-if value="{{ t.showCancel }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ t.cancelName }}" role="button" title="Cancel" style="flex:0 0 auto; width:36px; height:36px; display:grid; place-items:center; border-radius:7px; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.6); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-                  </sc-if>
-                </div>
-              </sc-if>
+              <span style="flex:0 0 auto; width:34px; height:34px; border-radius:9px; background:{{ t.tagBg }}; display:grid; place-items:center; font-size:14px; font-weight:800;">{{ t.tag }}</span>
+              <span style="font-size:18px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.nameLabel }}</span>
             </div>
             <div style="flex:0 0 auto; display:flex; align-items:center; gap:9px;">
               <sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}">
@@ -280,121 +261,158 @@
         </div>
       </sc-for>
     </div>
-      </div><!-- /left column -->
+      </div>
+    </div><!-- /board -->
 
-      <!-- ===== DISCUSSION ===== -->
-      <div style="flex:1 1 300px; min-width:0; position:sticky; top:24px; align-self:flex-start;">
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-        <h2 style="font-size:22px; font-weight:800; color:#fff;">Discussion</h2>
-        <span style="font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.45);">· {{ commentCountLabel }} messages</span>
+    <!-- ============================================================ -->
+    <!-- ===== MATCH SCHEDULE ===== -->
+    <!-- ============================================================ -->
+    <div style="margin-top:72px;">
+      <div style="margin-bottom:22px;">
+        <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Match Schedule</h2>
       </div>
 
-      <!-- Composer -->
-      <sc-if value="{{ notClosed }}" hint-placeholder-val="{{ true }}">
-        <div style="border:1px solid rgba(255,255,255,0.1); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px;">
-          <input value="{{ commentName }}" onChange="{{ onCommentName }}" placeholder="Your name" maxlength="40" style="height:44px; padding:0 14px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:14px; font-weight:600; outline:none;" style-focus="border-color:#8A72C7;">
-          <textarea value="{{ commentText }}" onChange="{{ onCommentText }}" onKeyDown="{{ onCommentKey }}" placeholder="Coordinate scrims, recruit a sub, trash talk responsibly…  (Enter to post · Shift+Enter for a new line)" rows="2" maxlength="280" style="padding:12px 14px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:14px; line-height:1.5; outline:none; resize:vertical; min-height:54px;" style-focus="border-color:#8A72C7;"></textarea>
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-            <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">{{ commentLenLabel }}</span>
-            <sc-if value="{{ canPost }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ postComment }}" role="button" style="height:42px; padding:0 22px; display:flex; align-items:center; gap:7px; border-radius:8px; background:linear-gradient(90deg,#4970AE,#5D3CB0); color:#fff; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(93,60,176,0.4);">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                Post
-              </div>
-            </sc-if>
-            <sc-if value="{{ cannotPost }}" hint-placeholder-val="{{ true }}">
-              <div style="height:42px; padding:0 22px; display:flex; align-items:center; border-radius:8px; background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.38); font-size:13px; font-weight:700; border:1px solid rgba(255,255,255,0.1);">Post</div>
-            </sc-if>
-          </div>
+      <!-- Overview table -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Tổng quan</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); margin-bottom:22px;">
+        <div style="display:grid; grid-template-columns:120px minmax(220px,1.6fr) 130px 100px 130px 170px; gap:16px; padding:13px 20px; background:rgba(141,114,199,0.12); font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
+          <span>Mốc</span><span>Nội dung</span><span>Ngày</span><span>Thứ</span><span>Giờ</span><span>Địa điểm</span>
         </div>
-      </sc-if>
-
-      <!-- Thread -->
-      <sc-if value="{{ noComments }}" hint-placeholder-val="{{ true }}">
-        <div style="padding:36px; text-align:center; border-radius:14px; border:1px dashed rgba(255,255,255,0.14); font-family:var(--font-mono); font-size:13px; color:rgba(255,255,255,0.42);">No messages yet. Start the conversation.</div>
-      </sc-if>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <sc-for list="{{ comments }}" as="c" hint-placeholder-count="3">
-          <div style="border:1px solid rgba(255,255,255,0.08); border-radius:12px; background:rgba(255,255,255,0.03); padding:13px 15px;">
-            <div style="display:flex; gap:12px;">
-              <span style="flex:0 0 auto; width:36px; height:36px; border-radius:999px; background:linear-gradient(135deg,#4970AE,#5D3CB0); display:grid; place-items:center; font-size:14px; font-weight:800;">{{ c.initials }}</span>
-              <div style="flex:1 1 auto; min-width:0;">
-                <div style="display:flex; align-items:baseline; gap:9px;">
-                  <span style="font-size:14px; font-weight:700; color:#fff;">{{ c.name }}</span>
-                  <span style="flex:0 0 auto; white-space:nowrap; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">{{ c.timeLabel }}</span>
-                  <sc-if value="{{ c.isAdmin }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ c.deleteComment }}" role="button" title="Delete (admin)" style="margin-left:auto; flex:0 0 auto; width:22px; height:22px; display:grid; place-items:center; border-radius:6px; color:rgba(255,255,255,0.35); cursor:pointer;" style-hover="color:#E24B4B; background:rgba(226,75,75,0.12);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
-                  </sc-if>
-                </div>
-                <p style="margin-top:3px; font-size:14px; color:rgba(255,255,255,0.82); line-height:1.5; white-space:pre-wrap; word-break:break-word;">{{ c.text }}</p>
-
-                <!-- reactions + reply toggle -->
-                <div style="display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap;">
-                  <div onClick="{{ c.rLike.toggle }}" role="button" title="Nice" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLike.chipBg }}; border:1px solid {{ c.rLike.chipBorder }}; color:{{ c.rLike.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"></path><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"></path></svg>
-                    {{ c.rLike.countLabel }}
-                  </div>
-                  <div onClick="{{ c.rLove.toggle }}" role="button" title="Love" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLove.chipBg }}; border:1px solid {{ c.rLove.chipBorder }}; color:{{ c.rLove.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
-                    {{ c.rLove.countLabel }}
-                  </div>
-                  <div onClick="{{ c.rFire.toggle }}" role="button" title="On fire" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rFire.chipBg }}; border:1px solid {{ c.rFire.chipBorder }}; color:{{ c.rFire.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
-                    {{ c.rFire.countLabel }}
-                  </div>
-                  <div onClick="{{ c.rLol.toggle }}" role="button" title="Haha" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 9px; border-radius:999px; background:{{ c.rLol.chipBg }}; border:1px solid {{ c.rLol.chipBorder }}; color:{{ c.rLol.chipColor }}; cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:background 120ms ease, border-color 120ms ease;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M18 13a6 6 0 0 1-6 5 6 6 0 0 1-6-5h12Z"></path><line x1="9" x2="9.01" y1="9" y2="9"></line><line x1="15" x2="15.01" y1="9" y2="9"></line></svg>
-                    {{ c.rLol.countLabel }}
-                  </div>
-                  <div onClick="{{ c.toggleReply }}" role="button" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 11px; border-radius:999px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.62); cursor:pointer; font-family:var(--font-mono); font-size:11px; font-weight:700; transition:color 120ms ease, border-color 120ms ease;" style-hover="color:#fff; border-color:rgba(141,114,199,0.55);">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></svg>
-                    Reply {{ c.replyCountLabel }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- replies -->
-            <sc-if value="{{ c.hasReplies }}" hint-placeholder-val="{{ false }}">
-              <div style="margin-top:11px; margin-left:48px; display:flex; flex-direction:column; gap:9px; border-left:2px solid rgba(141,114,199,0.28); padding-left:13px;">
-                <sc-for list="{{ c.replies }}" as="r" hint-placeholder-count="1">
-                  <div style="display:flex; gap:9px;">
-                    <span style="flex:0 0 auto; width:28px; height:28px; border-radius:999px; background:rgba(141,114,199,0.25); color:#cdbdf0; display:grid; place-items:center; font-size:12px; font-weight:800;">{{ r.initials }}</span>
-                    <div style="flex:1 1 auto; min-width:0;">
-                      <div style="display:flex; align-items:baseline; gap:8px;">
-                        <span style="font-size:13px; font-weight:700; color:#fff;">{{ r.name }}</span>
-                        <span style="flex:0 0 auto; white-space:nowrap; font-family:var(--font-mono); font-size:10px; color:rgba(255,255,255,0.4);">{{ r.timeLabel }}</span>
-                      </div>
-                      <p style="margin-top:2px; font-size:13px; color:rgba(255,255,255,0.8); line-height:1.5; white-space:pre-wrap; word-break:break-word;">{{ r.text }}</p>
-                    </div>
-                  </div>
-                </sc-for>
-              </div>
+        <sc-for list="{{ overviewRows }}" as="r" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:120px minmax(220px,1.6fr) 130px 100px 130px 170px; gap:16px; align-items:center; padding:14px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-size:14px; font-weight:800; color:#fff;">{{ r.moc }}</span>
+            <span style="font-size:14px; color:rgba(255,255,255,0.78);">{{ r.noiDung }}</span>
+            <sc-if value="{{ r.date.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.date.value }}" onChange="{{ r.date.onChange }}" placeholder="{{ r.date.placeholder }}" maxlength="16" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:700; font-family:var(--font-mono); outline:none;" style-focus="border-color:#8A72C7;">
             </sc-if>
-
-            <!-- reply composer -->
-            <sc-if value="{{ c.replyingHere }}" hint-placeholder-val="{{ false }}">
-              <div style="margin-top:11px; margin-left:48px; display:flex; flex-direction:column; gap:8px;">
-                <input value="{{ replyName }}" onChange="{{ onReplyName }}" placeholder="Your name" maxlength="40" style="height:40px; padding:0 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:13px; font-weight:600; outline:none;" style-focus="border-color:#8A72C7;">
-                <textarea value="{{ replyText }}" onChange="{{ onReplyText }}" onKeyDown="{{ onReplyKey }}" placeholder="Write a reply…  (Enter to send)" rows="2" maxlength="280" style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); color:#fff; font-size:13px; line-height:1.5; outline:none; resize:vertical; min-height:44px;" style-focus="border-color:#8A72C7;"></textarea>
-                <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px;">
-                  <div onClick="{{ c.toggleReply }}" role="button" style="height:36px; padding:0 14px; display:flex; align-items:center; border-radius:8px; color:rgba(255,255,255,0.55); font-size:12px; font-weight:700; cursor:pointer;">Cancel</div>
-                  <sc-if value="{{ c.canReply }}" hint-placeholder-val="{{ false }}">
-                    <div onClick="{{ c.submitReply }}" role="button" style="height:36px; padding:0 18px; display:flex; align-items:center; gap:6px; border-radius:8px; background:linear-gradient(90deg,#4970AE,#5D3CB0); color:#fff; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 5px 14px rgba(93,60,176,0.4);">Reply</div>
-                  </sc-if>
-                  <sc-if value="{{ c.cannotReply }}" hint-placeholder-val="{{ true }}">
-                    <div style="height:36px; padding:0 18px; display:flex; align-items:center; border-radius:8px; background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.35); font-size:12px; font-weight:700; border:1px solid rgba(255,255,255,0.1);">Reply</div>
-                  </sc-if>
-                </div>
-              </div>
+            <sc-if value="{{ r.date.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:{{ r.date.color }};">{{ r.date.display }}</span>
             </sc-if>
+            <sc-if value="{{ r.thu.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.thu.value }}" onChange="{{ r.thu.onChange }}" placeholder="{{ r.thu.placeholder }}" maxlength="14" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.thu.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:{{ r.thu.color }};">{{ r.thu.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.gio.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.gio.value }}" onChange="{{ r.gio.onChange }}" placeholder="{{ r.gio.placeholder }}" maxlength="16" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:600; font-family:var(--font-mono); outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.gio.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:600; color:{{ r.gio.color }};">{{ r.gio.display }}</span>
+            </sc-if>
+            <span style="font-size:13px; color:rgba(255,255,255,0.62);">{{ r.diaDiem }}</span>
           </div>
         </sc-for>
       </div>
-    </div><!-- /discussion right column -->
-    </div><!-- /board + discussion row -->
 
-    <div style="margin-top:44px; text-align:center; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.36);">Eastgate Software internal tournament · {{ deadlineLabel }} · Contact the organizers via the internal channel</div>
+      <!-- Detail: group stage (left) + semis/finals (right) -->
+      <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:stretch;">
+
+        <!-- Buổi 1 · Vòng bảng -->
+        <div style="flex:1.7 1 520px; min-width:0; border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 20px; background:rgba(141,114,199,0.12);">
+            <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 1 · Vòng bảng <span style="font-weight:500; color:rgba(255,255,255,0.55);">· {{ s1Sub }}</span></span>
+          </div>
+          <div style="grid-template-columns:100px 1fr 1fr 140px 70px; display:grid; gap:14px; padding:11px 20px; font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5); border-top:1px solid rgba(255,255,255,0.06);">
+            <span>Khung giờ</span><span>Trận 1</span><span>Trận 2</span><span>Đội nghỉ</span><span>Ghi chú</span>
+          </div>
+          <sc-for list="{{ groupRounds }}" as="g" hint-placeholder-count="6">
+            <div style="display:grid; grid-template-columns:100px 1fr 1fr 140px 70px; gap:14px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:{{ g.slotColor }};">{{ g.slot }}</span>
+              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m1a.bg }};">{{ g.m1a.label }}</span>
+                  <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">vs</span>
+                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m1b.bg }};">{{ g.m1b.label }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:14px; font-weight:800; color:#cdbdf0;">{{ g.summaryText }}</span>
+              </sc-if>
+              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m2a.bg }};">{{ g.m2a.label }}</span>
+                  <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">vs</span>
+                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m2b.bg }};">{{ g.m2b.label }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
+                <span></span>
+              </sc-if>
+              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
+                <span style="display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.55);"><span style="width:8px; height:8px; border-radius:999px; flex:0 0 auto; background:{{ g.rest.bg }};"></span>{{ g.rest.label }}</span>
+              </sc-if>
+              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
+                <span></span>
+              </sc-if>
+              <span style="font-family:var(--font-mono); font-size:11px; font-weight:600; color:{{ g.noteColor }};">{{ g.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- Buổi 2 + Buổi 3 -->
+        <div style="flex:1 1 340px; min-width:0; display:flex; flex-direction:column; justify-content:space-between; gap:20px;">
+          <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; background:rgba(141,114,199,0.12);">
+              <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 2 · Bán kết</span>
+              <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:rgba(205,189,240,0.85);">{{ s2Date }}</span>
+            </div>
+            <sc-for list="{{ semiRows }}" as="s" hint-placeholder-count="5">
+              <div style="display:grid; grid-template-columns:112px 1fr; gap:12px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+                <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:rgba(255,255,255,0.9);">{{ s.slot }}</span>
+                <span style="font-size:13px; color:rgba(255,255,255,0.78);">{{ s.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; background:rgba(141,114,199,0.12);">
+              <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 3 · Chung kết</span>
+              <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:rgba(205,189,240,0.85);">{{ s3Date }}</span>
+            </div>
+            <sc-for list="{{ finalRows }}" as="s" hint-placeholder-count="2">
+              <div style="display:grid; grid-template-columns:112px 1fr; gap:12px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+                <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:rgba(255,255,255,0.9);">{{ s.slot }}</span>
+                <span style="font-size:13px; color:rgba(255,255,255,0.78);">{{ s.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== TOURNAMENT RULEBOOK ===== -->
+    <!-- ============================================================ -->
+    <div style="margin-top:72px;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;">
+        <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Tournament Rulebook</h2>
+        <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); border:1px solid rgba(141,114,199,0.45); padding:9px 18px; border-radius:999px; white-space:nowrap;">05 đội · Round Robin + Bo3 + Bo5</span>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:stretch;">
+        <sc-for list="{{ ruleColumns }}" as="col" hint-placeholder-count="2">
+          <div style="flex:1 1 460px; min-width:0; border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+            <div style="display:grid; grid-template-columns:150px 1fr; gap:16px; padding:12px 20px; background:rgba(141,114,199,0.12); font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
+              <span>Mục · Nội dung</span><span>Chi tiết</span>
+            </div>
+            <sc-for list="{{ col.items }}" as="it" hint-placeholder-count="8">
+              <div style="display:grid; grid-template-columns:150px 1fr; gap:16px; align-items:center; padding:14px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <sc-if value="{{ it.hasNum }}" hint-placeholder-val="{{ true }}">
+                    <span style="flex:0 0 auto; width:22px; height:22px; border-radius:6px; background:rgba(141,114,199,0.22); border:1px solid rgba(141,114,199,0.4); color:#cdbdf0; display:grid; place-items:center; font-family:var(--font-mono); font-size:11px; font-weight:700;">{{ it.num }}</span>
+                  </sc-if>
+                  <sc-if value="{{ it.noNum }}" hint-placeholder-val="{{ false }}">
+                    <span style="flex:0 0 auto; width:22px;"></span>
+                  </sc-if>
+                  <span style="font-size:14px; font-weight:{{ it.labelWeight }}; color:{{ it.labelColor }};">{{ it.label }}</span>
+                </div>
+                <span style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5;">{{ it.detail }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
   </div>
 </div>
 </x-dc>
@@ -421,6 +439,7 @@ class Component extends DCLogic {
     teamNames: {},
     locks: {},
     nameDrafts: {},
+    scheduleDates: {},
     editingTeam: null,
     now: Date.now(),
   };
@@ -452,8 +471,9 @@ class Component extends DCLogic {
     { id: 't3', tag: '3' },
     { id: 't4', tag: '4' },
     { id: 't5', tag: '5' },
-    { id: 't6', tag: '6' },
   ];
+  TEAM_COLORS = ['#4970AE', '#7A5CD0', '#27B6D6', '#C24BA0', '#4F52B5'];
+  teamColor(id) { const idx = this.TEAMS.findIndex(t => t.id === id); return this.TEAM_COLORS[(idx < 0 ? 0 : idx) % this.TEAM_COLORS.length]; }
   LANES = [
     { id: 'top',     name: 'Top',     mono: 'T' },
     { id: 'jungle',  name: 'Jungle',  mono: 'J' },
@@ -461,6 +481,69 @@ class Component extends DCLogic {
     { id: 'bot',     name: 'Bot',     mono: 'B' },
     { id: 'support', name: 'Support', mono: 'S' },
   ];
+
+  // ---- Schedule & rulebook content (draft) ----
+  SCHED_OVERVIEW = [
+    { id: 'prep', moc: 'Chuẩn bị', noiDung: 'Đăng ký + bốc thăm + công bố lịch', thu: '—', gio: '—', diaDiem: 'Online' },
+    { id: 's1', moc: 'Buổi 1', noiDung: 'Vòng bảng — 10 trận Bo1 (2 trận song song)', thu: 'Chủ nhật', gio: '18:00–21:30', diaDiem: 'Outside Company' },
+    { id: 's2', moc: 'Buổi 2', noiDung: 'Bán kết — 2 trận Bo3 lần lượt', thu: 'Chủ nhật', gio: '17:30–21:30', diaDiem: 'Outside Company' },
+    { id: 's3', moc: 'Buổi 3', noiDung: 'Chung kết Bo5', thu: 'Chủ nhật', gio: '18:00–21:30', diaDiem: 'Outside Company' },
+  ];
+  GROUP_ROUNDS = [
+    { slot: '18:00 · L1', m1: ['t2', 't5'], m2: ['t3', 't4'], rest: 't1', note: 'Bo1' },
+    { slot: '18:40 · L2', m1: ['t1', 't5'], m2: ['t2', 't3'], rest: 't4', note: 'Bo1' },
+    { slot: '19:20 · L3', m1: ['t1', 't4'], m2: ['t5', 't3'], rest: 't2', note: 'Bo1' },
+    { slot: '20:00 · L4', m1: ['t1', 't3'], m2: ['t4', 't2'], rest: 't5', note: 'Bo1' },
+    { slot: '20:40 · L5', m1: ['t1', 't2'], m2: ['t4', 't5'], rest: 't3', note: 'Bo1' },
+  ];
+  SEMI_ROWS = [
+    { slot: '17:30–17:45', text: 'Check-in, mở màn, khởi động' },
+    { slot: '17:45–19:25', text: 'BK1: Hạng 1 vs Hạng 4 (Bo3)' },
+    { slot: '19:25–19:40', text: 'Nghỉ giải lao' },
+    { slot: '19:40–21:20', text: 'BK2: Hạng 2 vs Hạng 3 (Bo3)' },
+    { slot: '21:30', text: 'Chốt BXH → Top 2' },
+  ];
+  FINAL_ROWS = [
+    { slot: '18:00–18:15', text: 'Check-in, mở màn, khởi động' },
+    { slot: '18:15–21:30', text: 'Chung kết Bo5' },
+  ];
+  RULE_LEFT = [
+    { num: '1', label: 'Đội tham gia', detail: 'Mỗi đội gồm 05 tuyển thủ chính thức và tối đa 01 dự bị/ trận.' },
+    { num: '', label: 'Lock Team', detail: 'Captain liên hệ BTC để lock team. Sau khi lock không bổ sung thành viên mới.' },
+    { num: '', label: 'Thay đổi vị trí', detail: 'Được đổi lane giữa các thành viên trong đội trước mỗi trận.' },
+    { num: '2', label: 'Check-in', detail: 'Có mặt trước giờ thi đấu tối thiểu 15 phút để xác nhận đội hình.' },
+    { num: '', label: 'Đi muộn', detail: 'Quá 15 phút xử thua 1 ván. Quá 30 phút xử thua cả trận.' },
+    { num: '3', label: 'Vòng bảng', detail: '05 đội đấu vòng tròn 1 lượt (Round Robin), mỗi cặp 01 lần, Bo1.' },
+    { num: '', label: 'Tính điểm', detail: 'Thắng 01 điểm. Thua 00 điểm.' },
+    { num: '', label: 'Xếp hạng', detail: '(1) Tổng điểm + (2) Đối đầu + (3) Hiệu số + (4) BTC quyết định.' },
+    { num: '', label: 'Vào vòng trong', detail: 'Top 4 đội vào Bán kết. Đội hạng 5 dừng bước.' },
+  ];
+  RULE_RIGHT = [
+    { num: '4', label: 'Bán kết', detail: 'Hạng 1 vs 4, Hạng 2 vs 3. Bo3 (thắng 2 ván đi tiếp).' },
+    { num: '5', label: 'Chung kết', detail: 'Bo5 (đội thắng 3 ván vô địch).' },
+    { num: '6', label: 'Tài khoản', detail: 'Dùng tài khoản cá nhân. Không dùng tài khoản người khác.' },
+    { num: '7', label: 'Pause', detail: 'Chỉ pause khi sự cố kỹ thuật. Tối đa 10 phút mỗi trận.' },
+    { num: '8', label: 'Remake', detail: 'BTC chấp nhận remake khi lỗi hệ thống, lỗi Draft hoặc sự cố khách quan.' },
+    { num: '9', label: 'Thay người', detail: 'Chỉ thay giữa các trận, phải là tuyển thủ đã đăng ký dự bị.' },
+    { num: '10', label: 'Fair Play', detail: 'Không toxic, phần mềm thứ ba hay gian lận dưới mọi hình thức.' },
+    { num: '11', label: 'Khiếu nại', detail: 'Captain khiếu nại tới BTC trong vòng 15 phút sau trận.' },
+    { num: '12', label: 'Last decision', detail: 'Mọi quyết định của BTC là quyết định cuối cùng.' },
+  ];
+
+  teamLabel(id) {
+    const idx = this.TEAMS.findIndex(t => t.id === id);
+    return 'Đội ' + ((idx < 0 ? 0 : idx) + 1);
+  }
+  onScheduleField(id, field, val) {
+    const key = id + '__' + field;
+    if (this.useFb && this.scheduleDatesRef) {
+      try { (val && val.trim()) ? this.scheduleDatesRef.child(key).set(val) : this.scheduleDatesRef.child(key).remove(); } catch (e) {}
+      this.setState(s => ({ scheduleDates: { ...s.scheduleDates, [key]: val } }));
+      return;
+    }
+    this.setState(s => ({ scheduleDates: { ...s.scheduleDates, [key]: val } }), () => this.persistScheduleDates());
+  }
+  persistScheduleDates() { try { localStorage.setItem('egs-lol-scheduledates-v1', JSON.stringify(this.state.scheduleDates)); } catch (e) {} }
 
   isOnline() { const c = this.firebaseConfig; return !!(c && c.apiKey && c.databaseURL); }
 
@@ -471,11 +554,13 @@ class Component extends DCLogic {
         const rc = localStorage.getItem('egs-lol-comments-v1');
         const rn = localStorage.getItem('egs-lol-teamnames-v1');
         const rl = localStorage.getItem('egs-lol-locks-v1');
+        const rsd = localStorage.getItem('egs-lol-scheduledates-v1');
         const next = {};
         if (rp) next.players = JSON.parse(rp) || [];
         if (rc) next.comments = JSON.parse(rc) || [];
         if (rn) next.teamNames = JSON.parse(rn) || {};
         if (rl) next.locks = JSON.parse(rl) || {};
+        if (rsd) next.scheduleDates = JSON.parse(rsd) || {};
         if (Object.keys(next).length) this.setState(next);
       } catch (e) {}
     }
@@ -489,6 +574,7 @@ class Component extends DCLogic {
     if (this.commentsRef) { try { this.commentsRef.off(); } catch (e) {} }
     if (this.teamNamesRef) { try { this.teamNamesRef.off(); } catch (e) {} }
     if (this.locksRef) { try { this.locksRef.off(); } catch (e) {} }
+    if (this.scheduleDatesRef) { try { this.scheduleDatesRef.off(); } catch (e) {} }
   }
 
   initFirebase(attempt) {
@@ -521,6 +607,8 @@ class Component extends DCLogic {
       this.teamNamesRef.on('value', (snap) => { this.setState({ teamNames: snap.val() || {} }); });
       this.locksRef = this.db.ref('rooms/' + this.roomId + '/locks');
       this.locksRef.on('value', (snap) => { this.setState({ locks: snap.val() || {} }); });
+      this.scheduleDatesRef = this.db.ref('rooms/' + this.roomId + '/scheduleDates');
+      this.scheduleDatesRef.on('value', (snap) => { this.setState({ scheduleDates: snap.val() || {} }); });
     } catch (e) {}
   }
 
@@ -755,6 +843,8 @@ class Component extends DCLogic {
       const filled = lanes.filter(o => o.occupied).length;
       return {
         id: t.id, tag: t.tag,
+        tagBg: this.teamColor(t.id),
+        nameLabel: this.teamLabel(t.id),
         nameValue: savedName,
         nameSet: !!savedName && !editing,
         nameEditing: !savedName || editing,
@@ -825,6 +915,46 @@ class Component extends DCLogic {
 
     const ctLen = this.state.commentText.length;
 
+    // ---- Schedule + rulebook ----
+    const sd = this.state.scheduleDates || {};
+    const admin = this.isAdminUser();
+    const dateOf = (id) => (sd[id + '__date'] || '').trim();
+    const fld = (id, field, ph) => {
+      const key = id + '__' + field;
+      const val = (sd[key] || '').trim();
+      return {
+        value: sd[key] || '', display: val || '—',
+        color: val ? '#fff' : 'rgba(255,255,255,0.35)',
+        editable: admin, static: !admin, placeholder: ph,
+        onChange: (e) => this.onScheduleField(id, field, e.target.value),
+      };
+    };
+    const overviewRows = this.SCHED_OVERVIEW.map(r => ({
+      moc: r.moc, noiDung: r.noiDung, diaDiem: r.diaDiem,
+      date: fld(r.id, 'date', 'Ngày'), thu: fld(r.id, 'thu', 'Thứ'), gio: fld(r.id, 'gio', 'Giờ'),
+    }));
+    const teamChip = (id) => ({ label: this.teamLabel(id), bg: this.teamColor(id) });
+    const groupRounds = this.GROUP_ROUNDS.map(g => ({
+      slot: g.slot, slotColor: 'rgba(255,255,255,0.9)', isMatch: true, isSummary: false,
+      m1a: teamChip(g.m1[0]), m1b: teamChip(g.m1[1]),
+      m2a: teamChip(g.m2[0]), m2b: teamChip(g.m2[1]),
+      rest: teamChip(g.rest),
+      note: g.note, noteColor: 'rgba(255,255,255,0.55)',
+    }));
+    groupRounds.push({
+      slot: '21:20', slotColor: '#cdbdf0', isMatch: false, isSummary: true,
+      summaryText: 'Chốt BXH → Top 4',
+      note: 'Hết buổi 1', noteColor: 'rgba(205,189,240,0.85)',
+    });
+    const s1d = dateOf('s1');
+    const mkRule = (arr) => arr.map(it => ({
+      num: it.num, hasNum: !!it.num, noNum: !it.num,
+      label: it.label, detail: it.detail,
+      labelWeight: it.num ? '800' : '700',
+      labelColor: it.num ? '#fff' : 'rgba(255,255,255,0.82)',
+    }));
+    const ruleColumns = [{ items: mkRule(this.RULE_LEFT) }, { items: mkRule(this.RULE_RIGHT) }];
+
     return {
       eyebrow: this.props.eyebrow ?? 'Eastgate Software · Internal Tournament 2026',
       eventName: this.props.eventName ?? 'LEAGUE OF LEGENDS TEAM BOARD',
@@ -834,6 +964,15 @@ class Component extends DCLogic {
       cdBlocks, closed, notClosed: !closed,
       totalSpots: this.TEAMS.length * this.LANES.length,
       filledTotalLabel: filledTotal.toLocaleString('en-US'),
+
+      overviewRows,
+      groupRounds,
+      s1Sub: s1d ? (s1d + " · đến trước lượt 15'") : "đến trước lượt 15'",
+      s2Date: dateOf('s2') || '—',
+      s3Date: dateOf('s3') || '—',
+      semiRows: this.SEMI_ROWS,
+      finalRows: this.FINAL_ROWS,
+      ruleColumns,
 
       teamCards,
 
