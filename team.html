@@ -666,15 +666,17 @@ class Component extends DCLogic {
   isClosed() { return this.state.now > this.deadline; }
 
   openClaim(team, role) {
-    if (this.isClosed() || this.isLocked(team)) return;
+    if ((this.isClosed() || this.isLocked(team)) && !this.isAdminUser()) return;
     this.setState({ claim: { team, role }, claimName: '', claimIgn: '', claimRank: '' });
   }
   editClaim(team, role, occ) {
-    if (this.isClosed() || this.isLocked(team) || !occ) return;
+    if (!occ) return;
+    if ((this.isClosed() || this.isLocked(team)) && !this.isAdminUser()) return;
     this.setState({ claim: { team, role, key: occ._key, editing: true }, claimName: occ.name || '', claimIgn: occ.ign || '', claimRank: occ.rank && occ.rank !== '—' ? occ.rank : '' });
   }
   clearLane(occ) {
-    if (this.isClosed() || !occ) return;
+    if (!occ) return;
+    if (this.isClosed() && !this.isAdminUser()) return;
     if (this.isLocked(occ.team) && !this.isAdminUser()) return;
     if (this.useFb && this.playersRef && occ._key) {
       try { this.playersRef.child(occ._key).remove(); } catch (e) {}
@@ -843,13 +845,13 @@ class Component extends DCLogic {
         return {
           laneId: l.id, laneName: l.name, mono: l.mono, joinLabel: (claiming && claim && claim.editing) ? 'Save changes' : 'Join ' + l.name,
           occupied, claiming,
-          canEdit: occupied && !closed && !locked,
-          showAdminRemove: occupied && isAdmin && locked,
+          canEdit: occupied && (isAdmin || (!closed && !locked)),
+          showAdminRemove: false,
           editLane: () => this.editClaim(t.id, l.id, occ),
           clearLane: () => this.clearLane(occ),
-          showClaim: empty && !closed && !locked,
-          showLocked: empty && locked && !closed,
-          showClosed: empty && closed,
+          showClaim: empty && (isAdmin || (!closed && !locked)),
+          showLocked: empty && locked && !closed && !isAdmin,
+          showClosed: empty && closed && !isAdmin,
           pName: occ ? occ.name : '', pIgn: occ ? occ.ign : '', pRank: occ ? (occ.rank || '—') : '',
           monoBg: occupied ? 'rgba(141,114,199,0.22)' : 'rgba(255,255,255,0.05)',
           monoColor: occupied ? '#cdbdf0' : 'rgba(255,255,255,0.6)',
@@ -889,7 +891,7 @@ class Component extends DCLogic {
         lockBtnBorder: locked ? 'rgba(226,75,75,0.5)' : 'rgba(255,255,255,0.16)',
         lockBtnColor: locked ? '#ffb4b4' : 'rgba(255,255,255,0.6)',
         toggleLock: () => this.toggleLock(t.id),
-        canAddSub: !closed && !locked,
+        canAddSub: isAdmin || (!closed && !locked),
         claimingSub: !!(claim && claim.team === t.id && claim.role === 'sub'),
         openSub: () => this.openClaim(t.id, 'sub'),
       };
