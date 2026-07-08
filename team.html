@@ -291,109 +291,207 @@
         <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Match Schedule</h2>
       </div>
 
-      <!-- Overview table -->
-      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Tổng quan</div>
-      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); margin-bottom:22px;">
-        <div style="display:grid; grid-template-columns:120px minmax(220px,1.6fr) 130px 100px 130px 170px; gap:16px; padding:13px 20px; background:rgba(141,114,199,0.12); font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
-          <span>Mốc</span><span>Nội dung</span><span>Ngày</span><span>Thứ</span><span>Giờ</span><span>Địa điểm</span>
-        </div>
-        <sc-for list="{{ overviewRows }}" as="r" hint-placeholder-count="4">
-          <div style="display:grid; grid-template-columns:120px minmax(220px,1.6fr) 130px 100px 130px 170px; gap:16px; align-items:center; padding:14px 20px; border-top:1px solid rgba(255,255,255,0.06);">
-            <span style="font-size:14px; font-weight:800; color:#fff;">{{ r.moc }}</span>
-            <span style="font-size:14px; color:rgba(255,255,255,0.78);">{{ r.noiDung }}</span>
-            <sc-if value="{{ r.date.editable }}" hint-placeholder-val="{{ false }}">
-              <input value="{{ r.date.value }}" onChange="{{ r.date.onChange }}" placeholder="{{ r.date.placeholder }}" maxlength="16" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:700; font-family:var(--font-mono); outline:none;" style-focus="border-color:#8A72C7;">
+      <!-- Intro caption -->
+      <p style="max-width:840px; font-style:italic;">8 trận, ~3,5 tuần. 2 đội đá play-in để giành vé (thua vẫn xuống nhánh thua). Cặp play-in chọn bằng bốc thăm. <br>Chung kết áp luật CHẤP 1 VÁN (đội nhánh thắng dẫn trước 1-0).</p>
+
+      <!-- Thông tin chung -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Thông tin chung</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); margin-bottom:28px;">
+        <sc-for list="{{ infoRows }}" as="r" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:140px 1fr; gap:16px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="font-size:13px; font-weight:800; color:#fff;">{{ r.label }}</span>
+            <sc-if value="{{ r.value.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.value.value }}" onChange="{{ r.value.onChange }}" maxlength="140" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
             </sc-if>
-            <sc-if value="{{ r.date.static }}" hint-placeholder-val="{{ true }}">
-              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:{{ r.date.color }};">{{ r.date.display }}</span>
+            <sc-if value="{{ r.value.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.78); line-height:1.5;">{{ r.value.display }}</span>
             </sc-if>
-            <sc-if value="{{ r.thu.editable }}" hint-placeholder-val="{{ false }}">
-              <input value="{{ r.thu.value }}" onChange="{{ r.thu.onChange }}" placeholder="{{ r.thu.placeholder }}" maxlength="14" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
-            </sc-if>
-            <sc-if value="{{ r.thu.static }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:13px; color:{{ r.thu.color }};">{{ r.thu.display }}</span>
-            </sc-if>
-            <sc-if value="{{ r.gio.editable }}" hint-placeholder-val="{{ false }}">
-              <input value="{{ r.gio.value }}" onChange="{{ r.gio.onChange }}" placeholder="{{ r.gio.placeholder }}" maxlength="16" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:600; font-family:var(--font-mono); outline:none;" style-focus="border-color:#8A72C7;">
-            </sc-if>
-            <sc-if value="{{ r.gio.static }}" hint-placeholder-val="{{ true }}">
-              <span style="font-family:var(--font-mono); font-size:13px; font-weight:600; color:{{ r.gio.color }};">{{ r.gio.display }}</span>
-            </sc-if>
-            <span style="font-size:13px; color:rgba(255,255,255,0.62);">{{ r.diaDiem }}</span>
           </div>
         </sc-for>
       </div>
 
-      <!-- Detail: group stage (left) + semis/finals (right) -->
-      <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:stretch;">
-
-        <!-- Buổi 1 · Vòng bảng -->
-        <div style="flex:1.7 1 520px; min-width:0; border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 20px; background:rgba(141,114,199,0.12);">
-            <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 1 · Vòng bảng <span style="font-weight:500; color:rgba(255,255,255,0.55);">· {{ s1Sub }}</span></span>
-          </div>
-          <div style="grid-template-columns:100px 1fr 1fr 140px 70px; display:grid; gap:14px; padding:11px 20px; font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5); border-top:1px solid rgba(255,255,255,0.06);">
-            <span>Khung giờ</span><span>Trận 1</span><span>Trận 2</span><span>Đội nghỉ</span><span>Ghi chú</span>
-          </div>
-          <sc-for list="{{ groupRounds }}" as="g" hint-placeholder-count="6">
-            <div style="display:grid; grid-template-columns:100px 1fr 1fr 140px 70px; gap:14px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
-              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:{{ g.slotColor }};">{{ g.slot }}</span>
-              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
-                <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m1a.bg }};">{{ g.m1a.label }}</span>
-                  <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">vs</span>
-                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m1b.bg }};">{{ g.m1b.label }}</span>
-                </div>
-              </sc-if>
-              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
-                <span style="font-size:14px; font-weight:800; color:#cdbdf0;">{{ g.summaryText }}</span>
-              </sc-if>
-              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
-                <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m2a.bg }};">{{ g.m2a.label }}</span>
-                  <span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.4);">vs</span>
-                  <span style="display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; color:#fff; background:{{ g.m2b.bg }};">{{ g.m2b.label }}</span>
-                </div>
-              </sc-if>
-              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
-                <span></span>
-              </sc-if>
-              <sc-if value="{{ g.isMatch }}" hint-placeholder-val="{{ true }}">
-                <span style="display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.55);"><span style="width:8px; height:8px; border-radius:999px; flex:0 0 auto; background:{{ g.rest.bg }};"></span>{{ g.rest.label }}</span>
-              </sc-if>
-              <sc-if value="{{ g.isSummary }}" hint-placeholder-val="{{ false }}">
-                <span></span>
-              </sc-if>
-              <span style="font-family:var(--font-mono); font-size:11px; font-weight:600; color:{{ g.noteColor }};">{{ g.note }}</span>
-            </div>
-          </sc-for>
+      <!-- Thể thức thi đấu -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Thể thức thi đấu</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); margin-bottom:28px;">
+        <div style="display:grid; grid-template-columns:170px 1fr 78px 84px; gap:16px; padding:13px 20px; background:rgba(141,114,199,0.12); font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
+          <span>Vòng</span><span>Cơ cấu</span><span>Luật</span><span>Số trận</span>
         </div>
-
-        <!-- Buổi 2 + Buổi 3 -->
-        <div style="flex:1 1 340px; min-width:0; display:flex; flex-direction:column; justify-content:space-between; gap:20px;">
-          <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; background:rgba(141,114,199,0.12);">
-              <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 2 · Bán kết</span>
-              <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:rgba(205,189,240,0.85);">{{ s2Date }}</span>
-            </div>
-            <sc-for list="{{ semiRows }}" as="s" hint-placeholder-count="5">
-              <div style="display:grid; grid-template-columns:112px 1fr; gap:12px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:rgba(255,255,255,0.9);">{{ s.slot }}</span>
-                <span style="font-size:13px; color:rgba(255,255,255,0.78);">{{ s.text }}</span>
-              </div>
-            </sc-for>
+        <sc-for list="{{ formatRows }}" as="r" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:170px 1fr 78px 84px; gap:16px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+            <sc-if value="{{ r.vong.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.vong.value }}" onChange="{{ r.vong.onChange }}" maxlength="28" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:800; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.vong.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; font-weight:800; color:#fff;">{{ r.vong.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.coCau.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.coCau.value }}" onChange="{{ r.coCau.onChange }}" maxlength="140" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.coCau.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.76); line-height:1.5;">{{ r.coCau.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.luat.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.luat.value }}" onChange="{{ r.luat.onChange }}" maxlength="10" style="height:32px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-family:var(--font-mono); font-size:12px; font-weight:700; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.luat.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:#cdbdf0;">{{ r.luat.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.soTran.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.soTran.value }}" onChange="{{ r.soTran.onChange }}" maxlength="12" style="height:32px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.soTran.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.78);">{{ r.soTran.display }}</span>
+            </sc-if>
           </div>
-          <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; background:rgba(141,114,199,0.12);">
-              <span style="font-size:15px; font-weight:800; color:#fff;">Buổi 3 · Chung kết</span>
-              <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:rgba(205,189,240,0.85);">{{ s3Date }}</span>
-            </div>
-            <sc-for list="{{ finalRows }}" as="s" hint-placeholder-count="2">
-              <div style="display:grid; grid-template-columns:112px 1fr; gap:12px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:rgba(255,255,255,0.9);">{{ s.slot }}</span>
-                <span style="font-size:13px; color:rgba(255,255,255,0.78);">{{ s.text }}</span>
+        </sc-for>
+        <div style="display:grid; grid-template-columns:170px 1fr 78px 84px; gap:16px; align-items:center; padding:13px 20px; border-top:1px solid rgba(141,114,199,0.3); background:rgba(141,114,199,0.06);">
+          <span style="font-size:13px; font-weight:800; color:#cdbdf0;">Tổng</span>
+          <span></span><span></span>
+          <sc-if value="{{ formatTotal.editable }}" hint-placeholder-val="{{ false }}">
+            <input value="{{ formatTotal.value }}" onChange="{{ formatTotal.onChange }}" maxlength="12" style="height:32px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:800; outline:none;" style-focus="border-color:#8A72C7;">
+          </sc-if>
+          <sc-if value="{{ formatTotal.static }}" hint-placeholder-val="{{ true }}">
+            <span style="font-size:13px; font-weight:800; color:#cdbdf0;">{{ formatTotal.display }}</span>
+          </sc-if>
+        </div>
+      </div>
+
+      <!-- Lịch thi đấu -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Lịch thi đấu — 2 buổi/tuần (T5 &amp; CN), mỗi tối 1 trận</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); margin-bottom:28px;">
+        <div style="display:grid; grid-template-columns:92px minmax(240px,1.5fr) 92px 60px 116px 104px; gap:14px; padding:12px 20px; background:rgba(141,114,199,0.12); font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.55);">
+          <span>Buổi</span><span>Trận đấu</span><span>Ngày</span><span>Thứ</span><span>Giờ</span><span>Địa điểm</span>
+        </div>
+        <sc-for list="{{ timelineRows }}" as="r" hint-placeholder-count="9">
+          <div style="display:grid; grid-template-columns:92px minmax(240px,1.5fr) 92px 60px 116px 104px; gap:14px; align-items:center; padding:13px 20px; border-top:1px solid rgba(255,255,255,0.06);">
+            <sc-if value="{{ r.buoi.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.buoi.value }}" onChange="{{ r.buoi.onChange }}" maxlength="14" style="height:30px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:800; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.buoi.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; font-weight:800; color:#fff;">{{ r.buoi.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.tran.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.tran.value }}" onChange="{{ r.tran.onChange }}" maxlength="90" style="height:30px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.tran.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.82); line-height:1.45;">{{ r.tran.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.date.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.date.value }}" onChange="{{ r.date.onChange }}" maxlength="12" style="height:30px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-family:var(--font-mono); font-size:12px; font-weight:700; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.date.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; color:#fff;">{{ r.date.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.thu.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.thu.value }}" onChange="{{ r.thu.onChange }}" maxlength="6" style="height:30px; width:100%; padding:0 6px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.thu.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.62);">{{ r.thu.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.gio.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.gio.value }}" onChange="{{ r.gio.onChange }}" maxlength="16" style="height:30px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-family:var(--font-mono); font-size:12px; font-weight:600; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.gio.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-mono); font-size:13px; font-weight:600; color:rgba(255,255,255,0.82);">{{ r.gio.display }}</span>
+            </sc-if>
+            <sc-if value="{{ r.diaDiem.editable }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ r.diaDiem.value }}" onChange="{{ r.diaDiem.onChange }}" maxlength="18" style="height:30px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+            </sc-if>
+            <sc-if value="{{ r.diaDiem.static }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size:13px; color:rgba(255,255,255,0.62);">{{ r.diaDiem.display }}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Sơ đồ -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Sơ đồ (double elimination + play-in)</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+        <div style="overflow-x:auto; padding:22px 20px 24px;">
+          <div style="min-width:720px; display:flex; flex-direction:column; gap:28px;">
+
+            <!-- PLAY-IN -->
+            <div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Play-in (vòng loại)</div>
+              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M1</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 4</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Đội 5</span></div>
+                </div>
+                <span style="font-size:13px; color:rgba(255,255,255,0.6);">Thắng → Nhánh thắng · Thua → Nhánh thua</span>
               </div>
-            </sc-for>
+            </div>
+
+            <!-- NHÁNH THẮNG -->
+            <div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Nhánh thắng (Upper bracket)</div>
+              <div style="display:flex; align-items:center; flex-wrap:wrap;">
+                <div style="flex:0 0 auto; display:flex; flex-direction:column; justify-content:space-around; height:196px;">
+                  <div style="width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M2</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                    <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 1</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Đội 2</span></div>
+                  </div>
+                  <div style="width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M3</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                    <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 3</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M1</span></div>
+                  </div>
+                </div>
+                <div style="flex:0 0 auto; width:36px; align-self:stretch; position:relative;">
+                  <div style="position:absolute; left:0; width:18px; top:25%; border-top:2px solid rgba(141,114,199,0.5);"></div>
+                  <div style="position:absolute; left:0; width:18px; top:75%; border-top:2px solid rgba(141,114,199,0.5);"></div>
+                  <div style="position:absolute; left:18px; top:25%; height:50%; border-left:2px solid rgba(141,114,199,0.5);"></div>
+                  <div style="position:absolute; left:18px; width:18px; top:50%; border-top:2px solid rgba(141,114,199,0.5);"></div>
+                </div>
+                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M4</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Thắng M2</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Thắng M3</span></div>
+                  <div style="padding:5px 10px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.25); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thắng</div>
+                </div>
+                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
+                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết (dẫn 1-0)</span>
+              </div>
+            </div>
+
+            <!-- NHÁNH THUA -->
+            <div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Nhánh thua (Lower bracket) · thua là loại</div>
+              <div style="display:flex; align-items:center; flex-wrap:wrap;">
+                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M5</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M1</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M2</span></div>
+                </div>
+                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
+                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M6</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M5</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M3</span></div>
+                </div>
+                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
+                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M7</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M6</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M4</span></div>
+                  <div style="padding:5px 10px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.25); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thua</div>
+                </div>
+                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
+                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết</span>
+              </div>
+            </div>
+
+            <!-- CHUNG KẾT TỔNG -->
+            <div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Chung kết tổng</div>
+              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <div style="flex:0 0 auto; width:210px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M8</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo5</span></div>
+                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">VĐ nhánh thắng (dẫn 1-0)</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">VĐ nhánh thua</span></div>
+                </div>
+                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
+                <div style="flex:0 0 auto; padding:10px 16px; border:1px solid #8A72C7; border-radius:9px; background:rgba(141,114,199,0.16); display:flex; flex-direction:column; gap:3px;">
+                  <span style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0;">Vô địch</span>
+                  <span style="font-size:13px; font-weight:800; color:#fff;">Nhà vô địch EGS 2026</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -405,7 +503,7 @@
     <div style="margin-top:72px;">
       <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;">
         <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Tournament Rulebook</h2>
-        <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); border:1px solid rgba(141,114,199,0.45); padding:9px 18px; border-radius:999px; white-space:nowrap;">05 đội · Round Robin + Bo3 + Bo5</span>
+        <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); border:1px solid rgba(141,114,199,0.45); padding:9px 18px; border-radius:999px; white-space:nowrap;">5 đội · Double Elim + Play-in</span>
       </div>
 
       <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:stretch;">
@@ -423,9 +521,19 @@
                   <sc-if value="{{ it.noNum }}" hint-placeholder-val="{{ false }}">
                     <span style="flex:0 0 auto; width:22px;"></span>
                   </sc-if>
-                  <span style="font-size:14px; font-weight:{{ it.labelWeight }}; color:{{ it.labelColor }};">{{ it.label }}</span>
+                  <sc-if value="{{ it.label.editable }}" hint-placeholder-val="{{ false }}">
+                    <input value="{{ it.label.value }}" onChange="{{ it.label.onChange }}" maxlength="24" style="flex:1 1 auto; min-width:0; height:30px; padding:0 8px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:700; outline:none;" style-focus="border-color:#8A72C7;">
+                  </sc-if>
+                  <sc-if value="{{ it.label.static }}" hint-placeholder-val="{{ true }}">
+                    <span style="font-size:13px; font-weight:{{ it.labelWeight }}; color:{{ it.labelColor }};">{{ it.label.display }}</span>
+                  </sc-if>
                 </div>
-                <span style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5;">{{ it.detail }}</span>
+                <sc-if value="{{ it.detail.editable }}" hint-placeholder-val="{{ false }}">
+                  <input value="{{ it.detail.value }}" onChange="{{ it.detail.onChange }}" maxlength="120" style="width:100%; height:30px; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
+                </sc-if>
+                <sc-if value="{{ it.detail.static }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5;">{{ it.detail.display }}</span>
+                </sc-if>
               </div>
             </sc-for>
           </div>
@@ -501,52 +609,57 @@ class Component extends DCLogic {
     { id: 'support', name: 'Support', mono: 'S' },
   ];
 
-  // ---- Schedule & rulebook content (draft) ----
-  SCHED_OVERVIEW = [
-    { id: 'prep', moc: 'Chuẩn bị', noiDung: 'Đăng ký + bốc thăm + công bố lịch', thu: '—', gio: '—', diaDiem: 'Online' },
-    { id: 's1', moc: 'Buổi 1', noiDung: 'Vòng bảng — 10 trận Bo1 (2 trận song song)', thu: 'Chủ nhật', gio: '18:00–21:30', diaDiem: 'Outside Company' },
-    { id: 's2', moc: 'Buổi 2', noiDung: 'Bán kết — 2 trận Bo3 lần lượt', thu: 'Chủ nhật', gio: '17:30–21:30', diaDiem: 'Outside Company' },
-    { id: 's3', moc: 'Buổi 3', noiDung: 'Chung kết Bo5', thu: 'Chủ nhật', gio: '18:00–21:30', diaDiem: 'Outside Company' },
+  // ---- Schedule content (draft, admin-editable) ----
+  INFO_ROWS = [
+    { id: 'info_bomon', label: 'Bộ môn', value: "League of Legends (PC) — 5v5, Summoner's Rift" },
+    { id: 'info_soteam', label: 'Số team', value: '5 team (5 chính thức + tối đa 2 dự bị/đội)' },
+    { id: 'info_playin', label: 'Play-in', value: '2 đội đá vòng loại để vào bracket 4 đội — không có suất vào thẳng vòng sau' },
+    { id: 'info_hinhthuc', label: 'Hình thức', value: 'Outside, double elim + play-in (chấp 1 ván) — 8 buổi tối, 2 buổi/tuần (Thứ năm và Chủ nhật): 16/07–09/08' },
   ];
-  GROUP_ROUNDS = [
-    { slot: '18:00 · L1', m1: ['t2', 't5'], m2: ['t3', 't4'], rest: 't1', note: 'Bo1' },
-    { slot: '18:40 · L2', m1: ['t1', 't5'], m2: ['t2', 't3'], rest: 't4', note: 'Bo1' },
-    { slot: '19:20 · L3', m1: ['t1', 't4'], m2: ['t5', 't3'], rest: 't2', note: 'Bo1' },
-    { slot: '20:00 · L4', m1: ['t1', 't3'], m2: ['t4', 't2'], rest: 't5', note: 'Bo1' },
-    { slot: '20:40 · L5', m1: ['t1', 't2'], m2: ['t4', 't5'], rest: 't3', note: 'Bo1' },
+  FORMAT_ROWS = [
+    { id: 'fmt0', vong: 'Play-in (vòng loại)', coCau: '2 đội đá loại (chọn bằng bốc thăm); thắng vào nhánh thắng, thua xuống nhánh thua', luat: 'Bo3', soTran: '1 trận' },
+    { id: 'fmt1', vong: 'Nhánh thắng', coCau: '3 đội vào thẳng + đội thắng play-in; thua 1 trận rớt xuống nhánh thua', luat: 'Bo3', soTran: '3 trận' },
+    { id: 'fmt2', vong: 'Nhánh thua', coCau: 'Thua ở nhánh này là bị loại (thua 2 lần = out)', luat: 'Bo3', soTran: '3 trận' },
+    { id: 'fmt3', vong: 'Chung kết tổng', coCau: 'VĐ nhánh thắng vs VĐ nhánh thua — VĐ nhánh thắng dẫn trước 1-0 (chấp 1 ván)', luat: 'Bo5', soTran: '1 trận' },
   ];
-  SEMI_ROWS = [
-    { slot: '17:30–17:45', text: 'Check-in, mở màn, khởi động' },
-    { slot: '17:45–19:25', text: 'BK1: Hạng 1 vs Hạng 4 (Bo3)' },
-    { slot: '19:25–19:40', text: 'Nghỉ giải lao' },
-    { slot: '19:40–21:20', text: 'BK2: Hạng 2 vs Hạng 3 (Bo3)' },
-    { slot: '21:30', text: 'Chốt BXH → Top 2' },
+  TIMELINE_ROWS = [
+    { id: 'tl_prep', buoi: 'Chuẩn bị', tran: 'Bốc thăm cặp play-in + công bố sơ đồ nhánh', date: 'đến 11/07', thu: '—', gio: '—', diaDiem: 'Online' },
+    { id: 'tl1', buoi: 'Buổi 1', tran: 'M1 — Play-in (vòng loại): Đội 4 vs Đội 5 (Bo3)', date: '16/07', thu: 'T5', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl2', buoi: 'Buổi 2', tran: 'M2 — Nhánh thắng Bán kết: Đội 1 vs Đội 2', date: '19/07', thu: 'CN', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl3', buoi: 'Buổi 3', tran: 'M3 — Nhánh thắng Bán kết: Đội 3 vs Thắng Play-in', date: '23/07', thu: 'T5', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl4', buoi: 'Buổi 4', tran: 'M5 — Nhánh thua V1: Thua Play-in vs Thua M2', date: '26/07', thu: 'CN', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl5', buoi: 'Buổi 5', tran: 'M4 — Nhánh thắng CK nhánh: Thắng M2 vs Thắng M3', date: '30/07', thu: 'T5', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl6', buoi: 'Buổi 6', tran: 'M6 — Nhánh thua V2: Thắng M5 vs Thua M3', date: '02/08', thu: 'CN', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl7', buoi: 'Buổi 7', tran: 'M7 — Nhánh thua CK nhánh: Thắng M6 vs Thua M4', date: '06/08', thu: 'T5', gio: '19:00–21:00', diaDiem: 'Outside' },
+    { id: 'tl8', buoi: 'Buổi 8', tran: 'M8 — CHUNG KẾT TỔNG (Bo5): VĐ nhánh thắng (dẫn trước 1-0) vs VĐ nhánh thua', date: '09/08', thu: 'CN', gio: '18:30–21:30', diaDiem: 'Outside' },
   ];
-  FINAL_ROWS = [
-    { slot: '18:00–18:15', text: 'Check-in, mở màn, khởi động' },
-    { slot: '18:15–21:30', text: 'Chung kết Bo5' },
+  BRACKET_NOTES = [
+    { id: 'br0', label: 'PLAY-IN', detail: '2 đội (Đội 4 & Đội 5) đá loại. Thắng → vào nhánh thắng; Thua → xuống nhánh thua (vẫn còn 1 mạng).' },
+    { id: 'br1', label: 'NHÁNH THẮNG', detail: 'M2 (Đội 1-Đội 2), M3 (Đội 3 vs thắng play-in) → M4. Thắng M4 = Vô địch nhánh thắng, vào thẳng chung cuộc.' },
+    { id: 'br2', label: 'NHÁNH THUA (thua là loại)', detail: 'M5 (Thua play-in vs Thua M2) → M6 (Thắng M5 vs Thua M3) → M7 (Thắng M6 vs Thua M4).' },
+    { id: 'br3', label: 'CHUNG KẾT TỔNG (M8, Bo5)', detail: 'VĐ nhánh thắng vào trận dẫn trước 1-0 (chấp 1 ván) — bù cho việc đi hết nhánh thắng không thua. Không có ván reset.' },
   ];
   RULE_LEFT = [
-    { num: '1', label: 'Đội tham gia', detail: 'Mỗi đội gồm 05 tuyển thủ chính thức và tối đa 01 dự bị/ trận.' },
-    { num: '', label: 'Lock Team', detail: 'Captain liên hệ BTC để lock team. Sau khi lock không bổ sung thành viên mới.' },
-    { num: '', label: 'Thay đổi vị trí', detail: 'Được đổi lane giữa các thành viên trong đội trước mỗi trận.' },
-    { num: '2', label: 'Check-in', detail: 'Có mặt trước giờ thi đấu tối thiểu 15 phút để xác nhận đội hình.' },
-    { num: '', label: 'Đi muộn', detail: 'Quá 15 phút xử thua 1 ván. Quá 30 phút xử thua cả trận.' },
-    { num: '3', label: 'Vòng bảng', detail: '05 đội đấu vòng tròn 1 lượt (Round Robin), mỗi cặp 01 lần, Bo1.' },
-    { num: '', label: 'Tính điểm', detail: 'Thắng 01 điểm. Thua 00 điểm.' },
-    { num: '', label: 'Xếp hạng', detail: '(1) Tổng điểm + (2) Đối đầu + (3) Hiệu số + (4) BTC quyết định.' },
-    { num: '', label: 'Vào vòng trong', detail: 'Top 4 đội vào Bán kết. Đội hạng 5 dừng bước.' },
+    { id: 'rl0', num: '1', label: 'Đội tham gia', detail: 'Mỗi đội 05 tuyển thủ chính thức + tối đa 02 dự bị/đội.' },
+    { id: 'rl1', num: '', label: 'Lock Team', detail: 'Captain liên hệ BTC để lock team. Sau khi lock không bổ sung thành viên mới.' },
+    { id: 'rl2', num: '', label: 'Thay đổi vị trí', detail: 'Được đổi lane giữa các thành viên trong đội trước mỗi trận.' },
+    { id: 'rl3', num: '2', label: 'Thể thức', detail: 'Double elimination + play-in. 8 trận qua 8 buổi (T5 & CN).' },
+    { id: 'rl4', num: '', label: 'Play-in', detail: '2 đội (bốc thăm/thứ tự ĐK) đá Bo3. Thắng vào nhánh thắng, thua xuống nhánh thua.' },
+    { id: 'rl5', num: '3', label: 'Nhánh thắng', detail: '3 đội vào thẳng + đội thắng play-in. Bo3; thua 1 trận rớt xuống nhánh thua.' },
+    { id: 'rl6', num: '', label: 'Nhánh thua', detail: 'Bo3; thua ở nhánh này là bị loại (thua 2 lần = out).' },
+    { id: 'rl7', num: '4', label: 'Chung kết tổng', detail: 'Bo5. VĐ nhánh thắng dẫn trước 1-0 (chấp 1 ván), không có ván reset.' },
+    { id: 'rl8', num: '', label: 'Vô địch', detail: 'Đội thắng chung kết tổng là nhà vô địch.' },
   ];
   RULE_RIGHT = [
-    { num: '4', label: 'Bán kết', detail: 'Hạng 1 vs 4, Hạng 2 vs 3. Bo3 (thắng 2 ván đi tiếp).' },
-    { num: '5', label: 'Chung kết', detail: 'Bo5 (đội thắng 3 ván vô địch).' },
-    { num: '6', label: 'Tài khoản', detail: 'Dùng tài khoản cá nhân. Không dùng tài khoản người khác.' },
-    { num: '7', label: 'Pause', detail: 'Chỉ pause khi sự cố kỹ thuật. Tối đa 10 phút mỗi trận.' },
-    { num: '8', label: 'Remake', detail: 'BTC chấp nhận remake khi lỗi hệ thống, lỗi Draft hoặc sự cố khách quan.' },
-    { num: '9', label: 'Thay người', detail: 'Chỉ thay giữa các trận, phải là tuyển thủ đã đăng ký dự bị.' },
-    { num: '10', label: 'Fair Play', detail: 'Không toxic, phần mềm thứ ba hay gian lận dưới mọi hình thức.' },
-    { num: '11', label: 'Khiếu nại', detail: 'Captain khiếu nại tới BTC trong vòng 15 phút sau trận.' },
-    { num: '12', label: 'Last decision', detail: 'Mọi quyết định của BTC là quyết định cuối cùng.' },
+    { id: 'rr0', num: '5', label: 'Check-in', detail: 'Có mặt trước giờ thi đấu tối thiểu 15 phút để xác nhận đội hình.' },
+    { id: 'rr1', num: '', label: 'Đi muộn', detail: 'Quá 15 phút xử thua 1 ván. Quá 30 phút xử thua cả trận.' },
+    { id: 'rr2', num: '6', label: 'Tài khoản', detail: 'Dùng tài khoản cá nhân. Không dùng tài khoản người khác.' },
+    { id: 'rr3', num: '7', label: 'Pause', detail: 'Chỉ pause khi sự cố kỹ thuật. Tối đa 10 phút mỗi trận.' },
+    { id: 'rr4', num: '8', label: 'Remake', detail: 'BTC chấp nhận remake khi lỗi hệ thống, lỗi Draft hoặc sự cố khách quan.' },
+    { id: 'rr5', num: '9', label: 'Thay người', detail: 'Chỉ thay giữa các ván/trận, phải là dự bị đã đăng ký.' },
+    { id: 'rr6', num: '10', label: 'Fair Play', detail: 'Không toxic, phần mềm thứ ba hay gian lận dưới mọi hình thức.' },
+    { id: 'rr7', num: '11', label: 'Khiếu nại', detail: 'Captain khiếu nại tới BTC trong vòng 15 phút sau trận.' },
+    { id: 'rr8', num: '12', label: 'Quyết định cuối', detail: 'Mọi quyết định của BTC là quyết định cuối cùng.' },
   ];
 
   teamLabel(id) {
@@ -939,38 +1052,30 @@ class Component extends DCLogic {
     // ---- Schedule + rulebook ----
     const sd = this.state.scheduleDates || {};
     const admin = this.isAdminUser();
-    const dateOf = (id) => (sd[id + '__date'] || '').trim();
-    const fld = (id, field, ph) => {
+    // editable text with a default (falls back to default until admin overrides)
+    const txt = (id, field, def) => {
       const key = id + '__' + field;
-      const val = (sd[key] || '').trim();
+      const has = sd[key] != null;
+      const eff = has ? sd[key] : def;
       return {
-        value: sd[key] || '', display: val || '—',
-        color: val ? '#fff' : 'rgba(255,255,255,0.35)',
-        editable: admin, static: !admin, placeholder: ph,
+        value: has ? sd[key] : def, display: (eff && ('' + eff).trim()) ? eff : '—',
+        editable: admin, static: !admin,
         onChange: (e) => this.onScheduleField(id, field, e.target.value),
       };
     };
-    const overviewRows = this.SCHED_OVERVIEW.map(r => ({
-      moc: r.moc, noiDung: r.noiDung, diaDiem: r.diaDiem,
-      date: fld(r.id, 'date', 'Ngày'), thu: fld(r.id, 'thu', 'Thứ'), gio: fld(r.id, 'gio', 'Giờ'),
+    const infoRows = this.INFO_ROWS.map(r => ({ label: r.label, value: txt(r.id, 'value', r.value) }));
+    const formatRows = this.FORMAT_ROWS.map(r => ({
+      vong: txt(r.id, 'vong', r.vong), coCau: txt(r.id, 'coCau', r.coCau), luat: txt(r.id, 'luat', r.luat), soTran: txt(r.id, 'soTran', r.soTran),
     }));
-    const teamChip = (id) => ({ label: this.teamLabel(id), bg: this.teamColor(id) });
-    const groupRounds = this.GROUP_ROUNDS.map(g => ({
-      slot: g.slot, slotColor: 'rgba(255,255,255,0.9)', isMatch: true, isSummary: false,
-      m1a: teamChip(g.m1[0]), m1b: teamChip(g.m1[1]),
-      m2a: teamChip(g.m2[0]), m2b: teamChip(g.m2[1]),
-      rest: teamChip(g.rest),
-      note: g.note, noteColor: 'rgba(255,255,255,0.55)',
+    const formatTotal = txt('fmt_total', 'soTran', '8 trận');
+    const timelineRows = this.TIMELINE_ROWS.map(r => ({
+      buoi: txt(r.id, 'buoi', r.buoi), tran: txt(r.id, 'tran', r.tran),
+      date: txt(r.id, 'date', r.date), thu: txt(r.id, 'thu', r.thu), gio: txt(r.id, 'gio', r.gio), diaDiem: txt(r.id, 'diaDiem', r.diaDiem),
     }));
-    groupRounds.push({
-      slot: '21:20', slotColor: '#cdbdf0', isMatch: false, isSummary: true,
-      summaryText: 'Chốt BXH → Top 4',
-      note: 'Hết buổi 1', noteColor: 'rgba(205,189,240,0.85)',
-    });
-    const s1d = dateOf('s1');
+    const bracketNotes = this.BRACKET_NOTES.map(r => ({ label: txt(r.id, 'label', r.label), detail: txt(r.id, 'detail', r.detail) }));
     const mkRule = (arr) => arr.map(it => ({
       num: it.num, hasNum: !!it.num, noNum: !it.num,
-      label: it.label, detail: it.detail,
+      label: txt(it.id, 'label', it.label), detail: txt(it.id, 'detail', it.detail),
       labelWeight: it.num ? '800' : '700',
       labelColor: it.num ? '#fff' : 'rgba(255,255,255,0.82)',
     }));
@@ -986,13 +1091,11 @@ class Component extends DCLogic {
       totalSpots: this.TEAMS.length * this.LANES.length,
       filledTotalLabel: filledTotal.toLocaleString('en-US'),
 
-      overviewRows,
-      groupRounds,
-      s1Sub: s1d ? (s1d + " · đến trước lượt 15'") : "đến trước lượt 15'",
-      s2Date: dateOf('s2') || '—',
-      s3Date: dateOf('s3') || '—',
-      semiRows: this.SEMI_ROWS,
-      finalRows: this.FINAL_ROWS,
+      infoRows,
+      formatRows,
+      formatTotal,
+      timelineRows,
+      bracketNotes,
       ruleColumns,
 
       teamCards,
