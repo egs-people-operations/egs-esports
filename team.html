@@ -286,13 +286,15 @@
     <!-- ============================================================ -->
     <!-- ===== MATCH SCHEDULE ===== -->
     <!-- ============================================================ -->
+    
+
+    <!-- ============================================================ -->
+    <!-- ===== TOURNAMENT RULEBOOK ===== -->
+    <!-- ============================================================ -->
     <div style="margin-top:72px;">
       <div style="margin-bottom:22px;">
         <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Match Schedule</h2>
       </div>
-
-      <!-- Intro caption -->
-      <p style="max-width:840px; font-style:italic;">8 trận, ~3,5 tuần. 2 đội đá play-in để giành vé (thua vẫn xuống nhánh thua). Cặp play-in chọn bằng bốc thăm. <br>Chung kết áp luật CHẤP 1 VÁN (đội nhánh thắng dẫn trước 1-0).</p>
 
       <!-- Thông tin chung -->
       <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Thông tin chung</div>
@@ -322,13 +324,13 @@
               <input value="{{ r.vong.value }}" onChange="{{ r.vong.onChange }}" maxlength="28" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; font-weight:800; outline:none;" style-focus="border-color:#8A72C7;">
             </sc-if>
             <sc-if value="{{ r.vong.static }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:13px; font-weight:800; color:#fff;">{{ r.vong.display }}</span>
+              <span style="font-size:13px; font-weight:800; color:#fff;">{{ r.vong.display }}</span><span style="font-size:13px; color:rgba(255,255,255,0.76); line-height:1.5;">{{ r.coCau.display }}</span>
             </sc-if>
             <sc-if value="{{ r.coCau.editable }}" hint-placeholder-val="{{ false }}">
               <input value="{{ r.coCau.value }}" onChange="{{ r.coCau.onChange }}" maxlength="140" style="height:32px; width:100%; padding:0 9px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;">
             </sc-if>
             <sc-if value="{{ r.coCau.static }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size:13px; color:rgba(255,255,255,0.76); line-height:1.5;">{{ r.coCau.display }}</span>
+              
             </sc-if>
             <sc-if value="{{ r.luat.editable }}" hint-placeholder-val="{{ false }}">
               <input value="{{ r.luat.value }}" onChange="{{ r.luat.onChange }}" maxlength="10" style="height:32px; width:100%; padding:0 7px; border-radius:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(141,114,199,0.45); color:#fff; font-family:var(--font-mono); font-size:12px; font-weight:700; outline:none;" style-focus="border-color:#8A72C7;">
@@ -408,99 +410,110 @@
       <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Sơ đồ (double elimination + play-in)</div>
       <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
         <div style="overflow-x:auto; padding:22px 20px 24px;">
-          <div style="min-width:720px; display:flex; flex-direction:column; gap:28px;">
+          <div style="min-width:1040px; display:flex; flex-direction:column; gap:30px;">
 
-            <!-- PLAY-IN -->
-            <div>
-              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Play-in (vòng loại)</div>
-              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M1</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 4</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Đội 5</span></div>
-                </div>
-                <span style="font-size:13px; color:rgba(255,255,255,0.6);">Thắng → Nhánh thắng · Thua → Nhánh thua</span>
-              </div>
-            </div>
+            <!-- PLAY-IN folded into winner branch below -->
 
             <!-- NHÁNH THẮNG -->
             <div>
-              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Nhánh thắng (Upper bracket)</div>
-              <div style="display:flex; align-items:center; flex-wrap:wrap;">
-                <div style="flex:0 0 auto; display:flex; flex-direction:column; justify-content:space-around; height:196px;">
-                  <div style="width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M2</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                    <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 1</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Đội 2</span></div>
+              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(73,112,174,0.32),rgba(73,112,174,0.1)); margin-bottom:18px;">
+                <span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THẮNG</span>
+              </div>
+              <div style="display:flex; align-items:stretch; height:236px;">
+                <!-- Col 1: M1 Play-in (bottom) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:flex-end;">
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M1 · Play-in</span></div>
+                    <div style="padding:8px 12px; font-size:13px; color:#fff;">Đội 4</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <div style="padding:8px 12px; font-size:13px; color:#fff;">Đội 5</div>
                   </div>
-                  <div style="width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M3</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                    <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Đội 3</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M1</span></div>
+                </div>
+                <div style="flex:0 0 16px;"></div>
+                <!-- Col 2: M2 (top) + M3 (bottom) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:space-between;">
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M2 · Nhánh thắng BK</span></div>
+                    <div style="padding:8px 12px; font-size:13px; color:#fff;">Đội 1</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <div style="padding:8px 12px; font-size:13px; color:#fff;">Đội 2</div>
+                  </div>
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M3 · Nhánh thắng BK</span></div>
+                    <div style="padding:8px 12px; font-size:13px; color:#fff;">Đội 3</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thắng M1</div>
                   </div>
                 </div>
-                <div style="flex:0 0 auto; width:36px; align-self:stretch; position:relative;">
-                  <div style="position:absolute; left:0; width:18px; top:25%; border-top:2px solid rgba(141,114,199,0.5);"></div>
-                  <div style="position:absolute; left:0; width:18px; top:75%; border-top:2px solid rgba(141,114,199,0.5);"></div>
-                  <div style="position:absolute; left:18px; top:25%; height:50%; border-left:2px solid rgba(141,114,199,0.5);"></div>
-                  <div style="position:absolute; left:18px; width:18px; top:50%; border-top:2px solid rgba(141,114,199,0.5);"></div>
+                <!-- connector to M4 -->
+                <div style="flex:0 0 32px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:42px 0;">
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
                 </div>
-                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M4</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">Thắng M2</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">Thắng M3</span></div>
-                  <div style="padding:5px 10px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.25); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thắng</div>
+                <!-- Col 3: M4 (center) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:center;">
+                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M4 · Nhánh thắng CK</span></div>
+                    <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thắng M2</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thắng M3</div>
+                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">VĐ nhánh thắng</div>
+                  </div>
                 </div>
-                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
-                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết (dẫn 1-0)</span>
+                <!-- connector to M8 -->
+                <div style="flex:0 0 32px; display:flex; align-items:center; justify-content:center;">
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
+                </div>
+                <!-- Col 4: M8 (top) -->
+                <div style="flex:0 0 256px; display:flex; flex-direction:column; justify-content:flex-start;">
+                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M8 · CHUNG KẾT (Bo5) — dẫn 1-0</span></div>
+                    <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">VĐ nhánh thắng (dẫn 1-0)</div>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">VĐ nhánh thua</div>
+                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">Nhà vô địch EGS 2026</div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <!-- NHÁNH THUA -->
             <div>
-              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Nhánh thua (Lower bracket) · thua là loại</div>
-              <div style="display:flex; align-items:center; flex-wrap:wrap;">
-                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M5</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M1</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M2</span></div>
+              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(141,114,199,0.32),rgba(141,114,199,0.1)); margin-bottom:18px;"><span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THUA · thua là bị loại</span></div>
+              <div style="display:flex; align-items:center;">
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M5 · Nhánh thua V1</span></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thua M1</div>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thua M2</div>
                 </div>
-                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
-                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.35); border-radius:9px; background:rgba(255,255,255,0.04); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.16);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M6</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M5</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M3</span></div>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M6 · Nhánh thua V2</span></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thắng M5</div>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thua M3</div>
                 </div>
-                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
-                <div style="flex:0 0 auto; width:168px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M7</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo3</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thắng M6</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:rgba(255,255,255,0.62);">Thua M4</span></div>
-                  <div style="padding:5px 10px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.25); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thua</div>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.5); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.1);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M7 · Nhánh thua CK</span></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thắng M6</div>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">Thua M4</div>
+                  <div style="padding:5px 12px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thua</div>
                 </div>
-                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
-                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết</span>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết (M8)</span>
               </div>
             </div>
 
-            <!-- CHUNG KẾT TỔNG -->
-            <div>
-              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0; margin-bottom:12px;">Chung kết tổng</div>
-              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <div style="flex:0 0 auto; width:210px; border:1px solid rgba(141,114,199,0.5); border-radius:9px; background:rgba(141,114,199,0.1); overflow:hidden;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 10px; background:rgba(141,114,199,0.2);"><span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#cdbdf0;">M8</span><span style="font-family:var(--font-mono); font-size:11px; color:rgba(255,255,255,0.5);">Bo5</span></div>
-                  <div style="padding:8px 10px; display:flex; flex-direction:column; gap:6px;"><span style="font-size:13px; color:#fff;">VĐ nhánh thắng (dẫn 1-0)</span><span style="height:1px; background:rgba(255,255,255,0.08);"></span><span style="font-size:13px; color:#fff;">VĐ nhánh thua</span></div>
-                </div>
-                <span style="flex:0 0 auto; width:26px; text-align:center; font-size:13px; color:rgba(141,114,199,0.85);">→</span>
-                <div style="flex:0 0 auto; padding:10px 16px; border:1px solid #8A72C7; border-radius:9px; background:rgba(141,114,199,0.16); display:flex; flex-direction:column; gap:3px;">
-                  <span style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#cdbdf0;">Vô địch</span>
-                  <span style="font-size:13px; font-weight:800; color:#fff;">Nhà vô địch EGS 2026</span>
-                </div>
-              </div>
-            </div>
+            <!-- Flow caption -->
+            <p style="max-width:1000px; margin:2px 0 0; font-size:13px; line-height:1.65; color:rgba(255,255,255,0.6); font-style:italic;">Luồng: Play-in (M1) → nhánh thắng (M2, M3 → M4) → Chung kết M8. Đội thua ở nhánh thắng rớt xuống nhánh thua (M5 → M6 → M7). VĐ nhánh thắng (M4) gặp VĐ nhánh thua (M7) ở M8; đội nhánh thắng dẫn trước 1-0 (chấp 1 ván).</p>
 
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- ===== TOURNAMENT RULEBOOK ===== -->
-    <!-- ============================================================ -->
-    <div style="margin-top:72px;">
+    </div><div style="margin-top:72px;">
       <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;">
         <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Tournament Rulebook</h2>
         <span style="font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:rgba(205,189,240,0.9); border:1px solid rgba(141,114,199,0.45); padding:9px 18px; border-radius:999px; white-space:nowrap;">5 đội · Double Elim + Play-in</span>
@@ -641,19 +654,19 @@ class Component extends DCLogic {
   ];
   RULE_LEFT = [
     { id: 'rl0', num: '1', label: 'Đội tham gia', detail: 'Mỗi đội 05 tuyển thủ chính thức + tối đa 02 dự bị/đội.' },
-    { id: 'rl1', num: '', label: 'Lock Team', detail: 'Captain liên hệ BTC để lock team. Sau khi lock không bổ sung thành viên mới.' },
+    { id: 'rl1', num: '', label: 'Lock Team', detail: 'Captain liên hệ BTC để lock team. \nSau khi lock không bổ sung thành viên mới.' },
     { id: 'rl2', num: '', label: 'Thay đổi vị trí', detail: 'Được đổi lane giữa các thành viên trong đội trước mỗi trận.' },
     { id: 'rl3', num: '2', label: 'Thể thức', detail: 'Double elimination + play-in. 8 trận qua 8 buổi (T5 & CN).' },
-    { id: 'rl4', num: '', label: 'Play-in', detail: '2 đội (bốc thăm/thứ tự ĐK) đá Bo3. Thắng vào nhánh thắng, thua xuống nhánh thua.' },
+    { id: 'rl4', num: '', label: 'Play-in', detail: '2 đội (bốc thăm) đá Bo3. Thắng vào nhánh thắng, thua xuống nhánh thua.' },
     { id: 'rl5', num: '3', label: 'Nhánh thắng', detail: '3 đội vào thẳng + đội thắng play-in. Bo3; thua 1 trận rớt xuống nhánh thua.' },
     { id: 'rl6', num: '', label: 'Nhánh thua', detail: 'Bo3; thua ở nhánh này là bị loại (thua 2 lần = out).' },
-    { id: 'rl7', num: '4', label: 'Chung kết tổng', detail: 'Bo5. VĐ nhánh thắng dẫn trước 1-0 (chấp 1 ván), không có ván reset.' },
+    { id: 'rl7', num: '4', label: 'Chung kết tổng', detail: 'Bo5. VĐ nhánh thắng dẫn trước 1-0 (chấp 1 ván)' },
     { id: 'rl8', num: '', label: 'Vô địch', detail: 'Đội thắng chung kết tổng là nhà vô địch.' },
   ];
   RULE_RIGHT = [
-    { id: 'rr0', num: '5', label: 'Check-in', detail: 'Có mặt trước giờ thi đấu tối thiểu 15 phút để xác nhận đội hình.' },
+    { id: 'rr0', num: '5', label: 'Check-in', detail: 'Có mặt trước giờ thi đấu min 15 phút để xác nhận đội hình.' },
     { id: 'rr1', num: '', label: 'Đi muộn', detail: 'Quá 15 phút xử thua 1 ván. Quá 30 phút xử thua cả trận.' },
-    { id: 'rr2', num: '6', label: 'Tài khoản', detail: 'Dùng tài khoản cá nhân. Không dùng tài khoản người khác.' },
+    { id: 'rr2', num: '6', label: 'Tài khoản', detail: 'Dùng tài khoản cá nhân. Không dùng của người khác.' },
     { id: 'rr3', num: '7', label: 'Pause', detail: 'Chỉ pause khi sự cố kỹ thuật. Tối đa 10 phút mỗi trận.' },
     { id: 'rr4', num: '8', label: 'Remake', detail: 'BTC chấp nhận remake khi lỗi hệ thống, lỗi Draft hoặc sự cố khách quan.' },
     { id: 'rr5', num: '9', label: 'Thay người', detail: 'Chỉ thay giữa các ván/trận, phải là dự bị đã đăng ký.' },
