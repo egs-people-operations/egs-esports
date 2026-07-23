@@ -23,6 +23,8 @@
   </style>
 </helmet>
 
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0E1726"/><rect x="22" y="28" width="26" height="14" rx="3" fill="#4970AE"/><rect x="22" y="50" width="26" height="14" rx="3" fill="#4970AE"/><rect x="58" y="39" width="26" height="14" rx="3" fill="#5D3CB0"/><path d="M48 35H53V57H48M48 46H58" stroke="#cdbdf0" stroke-width="2" fill="none"/></svg></template>
+
 <div style="position:relative; min-height:100vh; background:#06090F; color:#fff; font-family:var(--font-sans);">
 
   <!-- ===== FIXED DECOR ===== -->
@@ -76,6 +78,117 @@
       <div style="margin-top:6px; font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,0.55); display:flex; align-items:center; gap:9px; border:1px solid rgba(255,255,255,0.13); padding:8px 16px; border-radius:999px;">
         <span style="width:7px; height:7px; border-radius:999px; background:#27D07A; box-shadow:0 0 9px #27D07A; animation:egsBlink 1.7s ease infinite;"></span>
         <span style="color:#fff; font-weight:700;">{{ filledTotalLabel }}</span> of {{ totalSpots }} spots filled
+      </div>
+    </div>
+
+    <!-- ===== BRACKET (moved to top) ===== -->
+    <div style="margin-top:40px; margin-bottom:8px;">
+      <!-- Sơ đồ -->
+      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Sơ đồ (double elimination + play-in)</div>
+      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
+        <div style="overflow-x:auto; padding:22px 20px 24px;">
+          <div style="min-width:1040px; display:flex; flex-direction:column; gap:30px;">
+
+            <!-- PLAY-IN folded into winner branch below -->
+
+            <!-- NHÁNH THẮNG -->
+            <div>
+              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(73,112,174,0.32),rgba(73,112,174,0.1)); margin-bottom:18px;">
+                <span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THẮNG</span>
+              </div>
+              <div style="display:flex; align-items:stretch; height:236px;">
+                <!-- Col 1: M1 Play-in (bottom) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:flex-end;">
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M1 · Play-in</span></div>
+                    <sc-if value="{{ bslots.m1a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m1a.value }}" onChange="{{ bslots.m1a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m1a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m1a.display }}</div></sc-if>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <sc-if value="{{ bslots.m1b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m1b.value }}" onChange="{{ bslots.m1b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m1b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m1b.display }}</div></sc-if>
+                  </div>
+                </div>
+                <div style="flex:0 0 16px;"></div>
+                <!-- Col 2: M2 (top) + M3 (bottom) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:space-between;">
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M2 · Nhánh thắng BK</span></div>
+                    <sc-if value="{{ bslots.m2a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m2a.value }}" onChange="{{ bslots.m2a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m2a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m2a.display }}</div></sc-if>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <sc-if value="{{ bslots.m2b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m2b.value }}" onChange="{{ bslots.m2b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m2b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m2b.display }}</div></sc-if>
+                  </div>
+                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M3 · Nhánh thắng BK</span></div>
+                    <sc-if value="{{ bslots.m3a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m3a.value }}" onChange="{{ bslots.m3a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m3a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m3a.display }}</div></sc-if>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <sc-if value="{{ bslots.m3b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m3b.value }}" onChange="{{ bslots.m3b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m3b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m3b.display }}</div></sc-if>
+                  </div>
+                </div>
+                <!-- connector to M4 -->
+                <div style="flex:0 0 32px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:42px 0;">
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
+                </div>
+                <!-- Col 3: M4 (center) -->
+                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:center;">
+                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M4 · Nhánh thắng CK</span></div>
+                    <sc-if value="{{ bslots.m4a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m4a.value }}" onChange="{{ bslots.m4a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m4a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m4a.display }}</div></sc-if>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <sc-if value="{{ bslots.m4b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m4b.value }}" onChange="{{ bslots.m4b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m4b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m4b.display }}</div></sc-if>
+                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">VĐ nhánh thắng</div>
+                  </div>
+                </div>
+                <!-- connector to M8 -->
+                <div style="flex:0 0 32px; display:flex; align-items:center; justify-content:center;">
+                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
+                </div>
+                <!-- Col 4: M8 (top) -->
+                <div style="flex:0 0 256px; display:flex; flex-direction:column; justify-content:flex-start;">
+                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
+                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M8 · CHUNG KẾT (Bo5) — dẫn 1-0</span></div>
+                    <sc-if value="{{ bslots.m8a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m8a.value }}" onChange="{{ bslots.m8a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m8a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m8a.display }}</div></sc-if>
+                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
+                    <sc-if value="{{ bslots.m8b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m8b.value }}" onChange="{{ bslots.m8b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m8b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m8b.display }}</div></sc-if>
+                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">Nhà vô địch EGS 2026</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- NHÁNH THUA -->
+            <div>
+              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(141,114,199,0.32),rgba(141,114,199,0.1)); margin-bottom:18px;"><span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THUA</span></div>
+              <div style="display:flex; align-items:center;">
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M5 · Nhánh thua V1</span></div>
+                  <sc-if value="{{ bslots.m5a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m5a.value }}" onChange="{{ bslots.m5a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m5a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m5a.display }}</div></sc-if>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <sc-if value="{{ bslots.m5b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m5b.value }}" onChange="{{ bslots.m5b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m5b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m5b.display }}</div></sc-if>
+                </div>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M6 · Nhánh thua V2</span></div>
+                  <sc-if value="{{ bslots.m6a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m6a.value }}" onChange="{{ bslots.m6a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m6a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m6a.display }}</div></sc-if>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <sc-if value="{{ bslots.m6b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m6b.value }}" onChange="{{ bslots.m6b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m6b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m6b.display }}</div></sc-if>
+                </div>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.5); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.1);">
+                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M7 · Nhánh thua CK</span></div>
+                  <sc-if value="{{ bslots.m7a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m7a.value }}" onChange="{{ bslots.m7a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m7a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m7a.display }}</div></sc-if>
+                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
+                  <sc-if value="{{ bslots.m7b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m7b.value }}" onChange="{{ bslots.m7b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m7b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m7b.display }}</div></sc-if>
+                  <div style="padding:5px 12px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thua</div>
+                </div>
+                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
+                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết (M8)</span>
+              </div>
+            </div>
+
+            <!-- Flow caption -->
+            <p style="max-width:1000px; margin:2px 0 0; font-size:13px; line-height:1.65; color:rgba(255,255,255,0.6); font-style:italic;">Luồng: Play-in (M1) → nhánh thắng (M2, M3 → M4) → Chung kết M8. Đội thua ở nhánh thắng rớt xuống nhánh thua (M5 → M6 → M7). <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; VĐ nhánh thắng (M4) gặp VĐ nhánh thua (M7) ở M8; đội nhánh thắng dẫn trước 1-0 (chấp 1 ván).</p>
+
+          </div>
+        </div>
       </div>
     </div>
 
@@ -406,113 +519,6 @@
         </sc-for>
       </div>
 
-      <!-- Sơ đồ -->
-      <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(205,189,240,0.85); margin-bottom:10px;">Sơ đồ (double elimination + play-in)</div>
-      <div style="border:1px solid rgba(141,114,199,0.24); border-radius:14px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));">
-        <div style="overflow-x:auto; padding:22px 20px 24px;">
-          <div style="min-width:1040px; display:flex; flex-direction:column; gap:30px;">
-
-            <!-- PLAY-IN folded into winner branch below -->
-
-            <!-- NHÁNH THẮNG -->
-            <div>
-              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(73,112,174,0.32),rgba(73,112,174,0.1)); margin-bottom:18px;">
-                <span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THẮNG</span>
-              </div>
-              <div style="display:flex; align-items:stretch; height:236px;">
-                <!-- Col 1: M1 Play-in (bottom) -->
-                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:flex-end;">
-                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
-                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M1 · Play-in</span></div>
-                    <sc-if value="{{ bslots.m1a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m1a.value }}" onChange="{{ bslots.m1a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m1a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m1a.display }}</div></sc-if>
-                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-                    <sc-if value="{{ bslots.m1b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m1b.value }}" onChange="{{ bslots.m1b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m1b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m1b.display }}</div></sc-if>
-                  </div>
-                </div>
-                <div style="flex:0 0 16px;"></div>
-                <!-- Col 2: M2 (top) + M3 (bottom) -->
-                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:space-between;">
-                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
-                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M2 · Nhánh thắng BK</span></div>
-                    <sc-if value="{{ bslots.m2a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m2a.value }}" onChange="{{ bslots.m2a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m2a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m2a.display }}</div></sc-if>
-                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-                    <sc-if value="{{ bslots.m2b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m2b.value }}" onChange="{{ bslots.m2b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m2b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m2b.display }}</div></sc-if>
-                  </div>
-                  <div style="border:1px solid rgba(73,112,174,0.35); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.05);">
-                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M3 · Nhánh thắng BK</span></div>
-                    <sc-if value="{{ bslots.m3a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m3a.value }}" onChange="{{ bslots.m3a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m3a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:#fff;">{{ bslots.m3a.display }}</div></sc-if>
-                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-                    <sc-if value="{{ bslots.m3b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m3b.value }}" onChange="{{ bslots.m3b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m3b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m3b.display }}</div></sc-if>
-                  </div>
-                </div>
-                <!-- connector to M4 -->
-                <div style="flex:0 0 32px; display:flex; flex-direction:column; justify-content:space-between; align-items:center; padding:42px 0;">
-                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
-                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
-                </div>
-                <!-- Col 3: M4 (center) -->
-                <div style="flex:0 0 214px; display:flex; flex-direction:column; justify-content:center;">
-                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
-                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M4 · Nhánh thắng CK</span></div>
-                    <sc-if value="{{ bslots.m4a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m4a.value }}" onChange="{{ bslots.m4a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m4a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m4a.display }}</div></sc-if>
-                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-                    <sc-if value="{{ bslots.m4b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m4b.value }}" onChange="{{ bslots.m4b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m4b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m4b.display }}</div></sc-if>
-                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">VĐ nhánh thắng</div>
-                  </div>
-                </div>
-                <!-- connector to M8 -->
-                <div style="flex:0 0 32px; display:flex; align-items:center; justify-content:center;">
-                  <span style="font-size:11px; color:rgba(73,112,174,0.8);">▶</span>
-                </div>
-                <!-- Col 4: M8 (top) -->
-                <div style="flex:0 0 256px; display:flex; flex-direction:column; justify-content:flex-start;">
-                  <div style="border:1px solid rgba(73,112,174,0.5); border-radius:8px; overflow:hidden; background:rgba(73,112,174,0.1);">
-                    <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(73,112,174,0.34),rgba(73,112,174,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M8 · CHUNG KẾT (Bo5) — dẫn 1-0</span></div>
-                    <sc-if value="{{ bslots.m8a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m8a.value }}" onChange="{{ bslots.m8a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m8a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m8a.display }}</div></sc-if>
-                    <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-                    <sc-if value="{{ bslots.m8b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m8b.value }}" onChange="{{ bslots.m8b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m8b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m8b.display }}</div></sc-if>
-                    <div style="padding:5px 12px; background:rgba(73,112,174,0.16); border-top:1px solid rgba(73,112,174,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#a9c2e8;">Nhà vô địch EGS 2026</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- NHÁNH THUA -->
-            <div>
-              <div style="padding:11px 18px; border-radius:8px; background:linear-gradient(90deg,rgba(141,114,199,0.32),rgba(141,114,199,0.1)); margin-bottom:18px;"><span style="font-family:var(--font-mono); font-size:14px; font-weight:800; letter-spacing:0.1em; color:#fff;">NHÁNH THUA</span></div>
-              <div style="display:flex; align-items:center;">
-                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
-                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M5 · Nhánh thua V1</span></div>
-                  <sc-if value="{{ bslots.m5a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m5a.value }}" onChange="{{ bslots.m5a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m5a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m5a.display }}</div></sc-if>
-                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
-                  <sc-if value="{{ bslots.m5b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m5b.value }}" onChange="{{ bslots.m5b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m5b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m5b.display }}</div></sc-if>
-                </div>
-                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
-                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.35); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.05);">
-                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M6 · Nhánh thua V2</span></div>
-                  <sc-if value="{{ bslots.m6a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m6a.value }}" onChange="{{ bslots.m6a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m6a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m6a.display }}</div></sc-if>
-                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
-                  <sc-if value="{{ bslots.m6b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m6b.value }}" onChange="{{ bslots.m6b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m6b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m6b.display }}</div></sc-if>
-                </div>
-                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
-                <div style="flex:0 0 214px; border:1px solid rgba(141,114,199,0.5); border-radius:8px; overflow:hidden; background:rgba(141,114,199,0.1);">
-                  <div style="padding:7px 12px; background:linear-gradient(135deg,rgba(141,114,199,0.34),rgba(141,114,199,0.12));"><span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">M7 · Nhánh thua CK</span></div>
-                  <sc-if value="{{ bslots.m7a.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m7a.value }}" onChange="{{ bslots.m7a.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m7a.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m7a.display }}</div></sc-if>
-                  <div style="height:1px; background:rgba(255,255,255,0.07);"></div>
-                  <sc-if value="{{ bslots.m7b.editable }}" hint-placeholder-val="{{ false }}"><div style="padding:5px 10px;"><input value="{{ bslots.m7b.value }}" onChange="{{ bslots.m7b.onChange }}" maxlength="40" style="width:100%; height:26px; padding:0 8px; border-radius:5px; background:rgba(255,255,255,0.08); border:1px solid rgba(141,114,199,0.5); color:#fff; font-size:13px; outline:none;" style-focus="border-color:#8A72C7;"></div></sc-if><sc-if value="{{ bslots.m7b.static }}" hint-placeholder-val="{{ true }}"><div style="padding:8px 12px; font-size:13px; color:rgba(255,255,255,0.55);">{{ bslots.m7b.display }}</div></sc-if>
-                  <div style="padding:5px 12px; background:rgba(141,114,199,0.16); border-top:1px solid rgba(141,114,199,0.28); font-family:var(--font-mono); font-size:10px; letter-spacing:0.05em; color:#cdbdf0;">VĐ nhánh thua</div>
-                </div>
-                <div style="flex:0 0 32px; text-align:center;"><span style="font-size:11px; color:rgba(141,114,199,0.8);">▶</span></div>
-                <span style="flex:0 0 auto; font-size:13px; color:rgba(255,255,255,0.6);">Chung kết (M8)</span>
-              </div>
-            </div>
-
-            <!-- Flow caption -->
-            <p style="max-width:1000px; margin:2px 0 0; font-size:13px; line-height:1.65; color:rgba(255,255,255,0.6); font-style:italic;">Luồng: Play-in (M1) → nhánh thắng (M2, M3 → M4) → Chung kết M8. Đội thua ở nhánh thắng rớt xuống nhánh thua (M5 → M6 → M7). <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; VĐ nhánh thắng (M4) gặp VĐ nhánh thua (M7) ở M8; đội nhánh thắng dẫn trước 1-0 (chấp 1 ván).</p>
-
-          </div>
-        </div>
-      </div>
     </div><div style="margin-top:72px;">
       <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;">
         <h2 style="font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.02em; line-height:1; margin:0; color:#fff;">Tournament Rulebook</h2>
